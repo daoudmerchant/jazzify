@@ -27,7 +27,12 @@ const Home = () => {
     if (!token) {
         return <p>Home page (logged in but without access token)</p>
     }
-    return <p>Home page (logged in, with token)</p>
+    return (
+    <div>
+        <p>Home page (logged in, with token)</p>
+        <button>Play something</button>
+    </div>
+    )
 }
 
 export default Home;

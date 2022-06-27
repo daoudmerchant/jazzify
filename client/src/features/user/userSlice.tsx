@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import userAPI from './userAPI';
 
 interface Token {
   access_token: string,
@@ -10,40 +11,27 @@ interface Token {
 
 export interface UserState {
   token: Token | null,
-  name: string | null,
+  username: string | null,
     status: 'idle' | 'loading' | 'failed';
 }
 
-interface TokenQuery {
+export interface TokenQuery {
   code: string,
   state: string
 }
 
 const initialState: UserState = {
   token: null,
-  name: null,
+  username: null,
   status: 'idle'
 }
 
 export const getUserAccessToken = createAsyncThunk(
   'users/getAccessToken',
   async ({ code, state }: TokenQuery) => {
-    const tokenResponse = await fetch(
-        `http://localhost:3001/spotify/callback?${new URLSearchParams({code, state})}`
-    );
-    const token = await tokenResponse.json();
-    const userResponse = await fetch(
-      "https://api.spotify.com/v1/me",
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token.access_token
-        }
-      }
-    )
-    const { display_name } = await userResponse.json();
-    return { token, name: display_name }
+    const token = await userAPI.getToken({code, state});
+    const username = await userAPI.getUsername(token.access_token);
+    return { token, username };
   }
 )
 
@@ -51,7 +39,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-      // reducers
+      signOut: () => initialState,
     },
     extraReducers: (builder) => {
       builder
@@ -60,9 +48,9 @@ export const userSlice = createSlice({
         })
         .addCase(getUserAccessToken.fulfilled, (state, action) => {
           state.status = 'idle'
-          const { token, name } = action.payload;
+          const { token, username } = action.payload;
           state.token = token;
-          state.name = name;
+          state.username = username;
         })
         .addCase(getUserAccessToken.rejected, (state) => {
             state.status = 'failed';
@@ -71,6 +59,8 @@ export const userSlice = createSlice({
   })
 
   export const selectUser = (state: { user: UserState}) => state.user;
+
+  export const { signOut } = userSlice.actions;
   
   export default userSlice.reducer;
 
