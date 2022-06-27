@@ -1,38 +1,22 @@
-import { useState, useEffect } from "react";
-
-interface Token {
-    access_token: string,
-    token_type: "Bearer",
-    scope: string,
-    expires_in: number
-}
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectUser } from "../features/user/userSlice";
+import { getUserAccessToken } from "../features/user/userSlice";
 
 const Home = () => {
     const { code, state, error } = Object.fromEntries(new URLSearchParams(window.location.search).entries());
-    const [loading, setLoading] = useState(false)
-    const [token, setToken] = useState<null | Token>(null)
+    const { token, status } = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
-        if (!code || token) {
+        if (!code || status === 'loading' || token) {
             return;
         }
-        const abortController = new AbortController();
-        const fetchToken = async () => {
-            const response = await fetch(
-                `http://localhost:3001/spotify/callback?${new URLSearchParams({code, state})}`,
-                { signal: abortController.signal }
-            );
-            const token = await response.json();
-            console.log(token)
-            setToken(token);
-        }
-        fetchToken()
-        return () => {
-            abortController.abort();
-          };
-    }, [code, state])
+        dispatch(getUserAccessToken({ code, state })) // FIX: Dispatches twice in Strict Mode
+    }, [code, state, status, dispatch])
 
-    if (loading) {
-        return <p>Loading...</p>
+    if (status === "loading") {
+        return <h1>Loading...</h1>
     }
     if (error) {
         return <p>There was an error signing in: {error}</p>

@@ -1,28 +1,49 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface User {
-    name: string
+interface Token {
+  access_token: string,
+  token_type: "Bearer",
+  scope: string,
+  expires_in: number,
+  refresh_token: string
 }
 
 export interface UserState {
-    user: User | null;
+  token: Token | null,
+  name: string | null,
     status: 'idle' | 'loading' | 'failed';
-  }
+}
+
+interface TokenQuery {
+  code: string,
+  state: string
+}
 
 const initialState: UserState = {
-    user: null,
-    status: 'idle'
-  }
+  token: null,
+  name: null,
+  status: 'idle'
+}
 
-export const fetchUserById = createAsyncThunk(
-  'users/fetchByIdStatus',
-  async (id: string) => {
-    // TODO: Replace with real database query
-    console.log("Fetching user " + id)
-    await new Promise((res) => setTimeout(res, 1000));
-    return {
-      name: "Jim Jones",
-    };
+export const getUserAccessToken = createAsyncThunk(
+  'users/getAccessToken',
+  async ({ code, state }: TokenQuery) => {
+    const tokenResponse = await fetch(
+        `http://localhost:3001/spotify/callback?${new URLSearchParams({code, state})}`
+    );
+    const token = await tokenResponse.json();
+    const userResponse = await fetch(
+      "https://api.spotify.com/v1/me",
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token.access_token
+        }
+      }
+    )
+    const { display_name } = await userResponse.json();
+    return { token, name: display_name }
   }
 )
 
@@ -34,21 +55,22 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder
-        .addCase(fetchUserById.pending, (state) => {
+        .addCase(getUserAccessToken.pending, (state) => {
           state.status = 'loading'
         })
-        .addCase(fetchUserById.fulfilled, (state, action) => {
-          console.log(state.user);
+        .addCase(getUserAccessToken.fulfilled, (state, action) => {
           state.status = 'idle'
-          state.user = action.payload;
+          const { token, name } = action.payload;
+          state.token = token;
+          state.name = name;
         })
-        .addCase(fetchUserById.rejected, (state) => {
+        .addCase(getUserAccessToken.rejected, (state) => {
             state.status = 'failed';
         });
     }
   })
 
-  export const selectUser = (state: UserState) => state.user;
+  export const selectUser = (state: { user: UserState}) => state.user;
   
   export default userSlice.reducer;
 
