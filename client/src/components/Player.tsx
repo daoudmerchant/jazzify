@@ -9,24 +9,20 @@ interface Props {
 
 const Player = ({ track, paused, togglePlay, next }: Props) => {
     return (
-        <div className="container">
-        <div className="main-wrapper">
-            <img src={track.album.images[0].url} 
-                className="now-playing__cover" alt="" />
+        <div className="player">
+            <img src={track.album.images[0].url}
+                className="player__cover" alt="" />
 
-            <div className="now-playing__side">
-                <div className="now-playing__name">{
-                            track.name
-                            }</div>
+            <div className="player__track-name">{
+                track.name
+            }</div>
 
-                <div className="now-playing__artist">{
-                            track.artists[0].name
-                            }</div>
-            </div>
+            <div className="player__artist">{
+                track.artists[0].name
+            }</div>
+            <button onClick={togglePlay}>{paused ? "PLAY" : "PAUSE"}</button>
+            <button onClick={next}>NEXT TRACK</button>
         </div>
-    <button onClick={togglePlay}>{paused ? "PLAY" : "PAUSE"}</button>
-    <button onClick={next}>NEXT TRACK</button>
-    </div>
     )
 }
 

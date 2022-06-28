@@ -28,6 +28,27 @@ export const playKurt = createAsyncThunk(
   }
 )
 
+// TODO: Add backend
+
+// export const playMatchingSongs = createAsyncThunk(
+//   'player/playMatchingSongs',
+//   // @ts-ignore
+//   async (instruments: array, { getState }) => {
+//     // Search my database for matching URIs
+//     // Perform call to Spotify to start playing them
+//   },
+//   {
+//     condition: (_, { getState }) => {
+//       // @ts-ignore
+//       const { player: status } = getState()
+//       if (status === 'fulfilled' || status === 'loading') {
+//         // Already fetched or in progress, don't need to re-fetch
+//         return false
+//       }
+//     },
+//   }
+// )
+
 
 export const playerSlice = createSlice({
     name: 'player',
