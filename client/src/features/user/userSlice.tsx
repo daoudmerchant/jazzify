@@ -31,11 +31,10 @@ export const getUserAccessToken = createAsyncThunk(
     return { token, username };
   },
   {
-    condition: (_, { getState }) => {
+    condition: (_, { getState }) => { // FIX: Won't abort first fetch call if dispatch #2 comes during 2nd
       // @ts-ignore
       const { user: status } = getState()
       if (status === 'fulfilled' || status === 'loading') {
-        // Already fetched or in progress, don't need to re-fetch
         return false
       }
     },
