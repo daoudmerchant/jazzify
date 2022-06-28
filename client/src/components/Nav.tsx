@@ -3,6 +3,7 @@ import { selectUser } from "../features/user/userSlice";
 import { Link } from "react-router-dom"
 
 const Nav = () => {
+    // @ts-ignore
     const { username } = useAppSelector(selectUser);
     return (
         <header>

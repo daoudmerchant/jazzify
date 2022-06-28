@@ -12,7 +12,8 @@ interface Token {
 export interface UserState {
   token: Token | null,
   username: string | null,
-    status: 'idle' | 'loading' | 'failed';
+  deviceId: string | null
+  status: 'idle' | 'loading' | 'failed';
 }
 
 export interface TokenQuery {
@@ -20,26 +21,28 @@ export interface TokenQuery {
   state: string
 }
 
-const initialState: UserState = {
-  token: null,
-  username: null,
-  status: 'idle'
-}
+const defaultState = { token: null, username: null, deviceId: null, status: 'idle'}
 
 export const getUserAccessToken = createAsyncThunk(
   'users/getAccessToken',
   async ({ code, state }: TokenQuery) => {
     const token = await userAPI.getToken({code, state});
+    console.log(token.access_token);
     const username = await userAPI.getUsername(token.access_token);
-    return { token, username };
+    const userDetails = { token, username };
+    window.localStorage.setItem('jazzify', JSON.stringify(userDetails))
+    return userDetails;
   }
 )
 
 export const userSlice = createSlice({
     name: 'user',
-    initialState,
+    initialState: defaultState,
     reducers: {
-      signOut: () => initialState,
+      signOut: () => defaultState,
+      setDeviceId: (state, action) => {
+        state.deviceId = action.payload
+      }
     },
     extraReducers: (builder) => {
       builder
@@ -58,7 +61,8 @@ export const userSlice = createSlice({
     }
   })
 
-  export const selectUser = (state: { user: UserState}) => state.user;
+  export const selectUser = (state: { user: UserState, player: any }) => state.user;
+  export const selectToken = (state: { user: UserState, player: any }) => state.user.token?.access_token
 
   export const { signOut } = userSlice.actions;
   

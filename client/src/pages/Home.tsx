@@ -1,10 +1,15 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectUser } from "../features/user/userSlice";
+import { selectPlayer } from "../features/player/playerSlice";
+import { initialisePlayer } from "../features/player/playerSlice";
 import { getUserAccessToken } from "../features/user/userSlice";
+
+import Main from "./Main";
 
 const Home = () => {
     const { code, state, error } = Object.fromEntries(new URLSearchParams(window.location.search).entries());
+    // @ts-ignore
     const { token, status } = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
 
@@ -13,7 +18,7 @@ const Home = () => {
             return;
         }
         dispatch(getUserAccessToken({ code, state })) // FIX: Dispatches twice in Strict Mode
-    }, [code, state, status, dispatch])
+    }, [code, state, status, token, dispatch])
 
     if (status === "loading") {
         return <h1>Loading...</h1>
@@ -21,18 +26,10 @@ const Home = () => {
     if (error) {
         return <p>There was an error signing in: {error}</p>
     }
-    if (!code) {
-        return <p>Home Page (not logged in)</p>
-    }
     if (!token) {
-        return <p>Home page (logged in but without access token)</p>
+        return <p>Home page (logged out)</p>
     }
-    return (
-    <div>
-        <p>Home page (logged in, with token)</p>
-        <button>Play something</button>
-    </div>
-    )
+    return <Main accessToken={token.access_token} />
 }
 
 export default Home;

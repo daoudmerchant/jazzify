@@ -18,8 +18,23 @@ const getUsername = async (accessToken: string) => {
           }
         }
       )
-      const { display_name } = await userResponse.json();
-      return display_name;
+      const userData = await userResponse.json();
+      console.log(userData)
+      return userData.display_name;
 }
 
-export default { getToken, getUsername }
+const getDevices = async (accessToken: string) => {
+  const deviceResponse = await fetch(
+    "https://api.spotify.com/v1/me/player/devices",
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
+    }
+  )
+  return await deviceResponse.json();
+}
+
+export default { getToken, getUsername, getDevices }

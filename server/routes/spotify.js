@@ -2,6 +2,23 @@ const express = require('express');
 require('dotenv').config();
 const fetch = require('node-fetch');
 
+const scopes = [
+  "user-read-email",
+  "playlist-read-private",
+  "playlist-read-collaborative",
+  "streaming",
+  "user-read-private",
+  "user-library-read",
+  "user-top-read",
+  "user-library-modify",
+  "user-read-playback-state",
+  "user-modify-playback-state",
+  "user-read-currently-playing",
+  "user-read-recently-played",
+  "user-read-playback-state",
+  "user-follow-read",
+]
+
 const router = express.Router();
 
 router.get('/login', (_, res) => {
@@ -10,7 +27,7 @@ router.get('/login', (_, res) => {
     new URLSearchParams({
       response_type: 'code',
       client_id: process.env.CLIENT_ID,
-      scope: 'user-read-private user-read-email',
+      scope: scopes.join(' '),
       redirect_uri: 'http://localhost:3000/',
       state,
     }));
@@ -34,6 +51,8 @@ router.get('/callback', async (req, res) => {
       }
     })
     const token = await response.json();
+    console.log("SUCCESS")
+    console.log(token)
     res.json(token)
   } catch(e) {
     res.json({error: e.message})
