@@ -15,7 +15,7 @@ const Home = () => {
         if (!code || status === 'loading' || token) {
             return;
         }
-        dispatch(getUserAccessToken({ code, state })) // FIX: Dispatches twice in Strict Mode
+        dispatch(getUserAccessToken({ code, state }))
     }, [code, state, status, token, dispatch])
 
     if (status === "loading") {

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { setDeviceId } from "../features/player/playerSlice";
+import { playKurt } from "../features/player/playerSlice"
 
 interface Props {
     accessToken: string,
 }
 
 const Main = ({ accessToken }: Props) => {
-    console.log(accessToken)
+
     const dispatch = useAppDispatch();
     const [player, setPlayer] = useState(null);
     useEffect(() => {
@@ -22,8 +23,7 @@ const Main = ({ accessToken }: Props) => {
         // @ts-ignore
             const player = new window.Spotify.Player({
                 name: 'Jazzify',
-                // @ts-ignore
-                getOAuthToken: cb => cb(accessToken),
+                getOAuthToken: (cb: (token: string) => void) => cb(accessToken),
                 volume: 0.5
             });
 
@@ -42,9 +42,9 @@ const Main = ({ accessToken }: Props) => {
     }, [])
     return (
         <div>
-        <p>Home page (logged in, with token)</p>
-        <button>Play something</button>
-    </div>
+            <p>Home page (logged in, with token)</p>
+            <button onClick={() => dispatch(playKurt())}>Play Kurt</button>
+        </div>
     )
 }
 

@@ -28,9 +28,17 @@ export const getUserAccessToken = createAsyncThunk(
   async ({ code, state }: TokenQuery) => {
     const token = await userAPI.getToken({code, state});
     const username = await userAPI.getUsername(token.access_token);
-    const userDetails = { token, username };
-    window.localStorage.setItem('jazzify', JSON.stringify(userDetails))
-    return userDetails;
+    return { token, username };
+  },
+  {
+    condition: (_, { getState }) => {
+      // @ts-ignore
+      const { user: status } = getState()
+      if (status === 'fulfilled' || status === 'loading') {
+        // Already fetched or in progress, don't need to re-fetch
+        return false
+      }
+    },
   }
 )
 

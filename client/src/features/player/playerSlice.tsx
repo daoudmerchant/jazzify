@@ -1,43 +1,54 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { UserState } from "../user/userSlice";
+import playerAPI from './playerAPI';
 
-interface PlayerState {
-    device_id: string
+export interface PlayerState {
+    device_id: string,
+    status: 'idle' | 'loading' | 'failed';
 }
 
+export const playKurt = createAsyncThunk(
+  'player/playKurt',
+  // @ts-ignore
+  async (_, { getState }) => {
+  // @ts-ignore
+    const { user, player } = getState();
+    const playRequest = await playerAPI.playKurt({ deviceId: player.device_id, accessToken: user.token.access_token});
+    const data = await playRequest.json()
+    console.log(data)
+  },
+  {
+    condition: (_, { getState }) => {
+      // @ts-ignore
+      const { player: status } = getState()
+      if (status === 'fulfilled' || status === 'loading') {
+        // Already fetched or in progress, don't need to re-fetch
+        return false
+      }
+    },
+  }
+)
 
-// export const getUserAccessToken = createAsyncThunk(
-//   'users/getAccessToken',
-//   async ({ code, state }: TokenQuery) => {
-//     const token = await userAPI.getToken({code, state});
-//     const username = await userAPI.getUsername(token.access_token);
-//     return { token, username };
-//   }
-// )
 
 export const playerSlice = createSlice({
     name: 'player',
-    initialState: { device_id: null },
+    initialState: { device_id: null, status: "idle" },
     reducers: {
       setDeviceId: (state, action) => {
         state.device_id = action.payload
       }
+    },
+    extraReducers: (builder) => {
+      builder
+        .addCase(playKurt.pending, (state) => {
+          state.status = "loading"
+        })
+        .addCase(playKurt.fulfilled, (state) => {
+          state.status = "idle"
+        })
+        .addCase(playKurt.rejected, (state) => {
+          state.status = "failed"
+        });
     }
-    // extraReducers: (builder) => {
-    //   builder
-    //     .addCase(getUserAccessToken.pending, (state) => {
-    //       state.status = 'loading'
-    //     })
-    //     .addCase(getUserAccessToken.fulfilled, (state, action) => {
-    //       state.status = 'idle'
-    //       const { token, username } = action.payload;
-    //       state.token = token;
-    //       state.username = username;
-    //     })
-    //     .addCase(getUserAccessToken.rejected, (state) => {
-    //         state.status = 'failed';
-    //     });
-    // }
   })
 
   export const selectPlayer = (state: any) => state.player;
