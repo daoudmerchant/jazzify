@@ -1,14 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { UserState } from "../user/userSlice";
 
-interface PlayerListenerParam {
+interface PlayerState {
     device_id: string
 }
-
-export interface PlayerState {
-  player: any // FIX
-}
-
 
 
 // export const getUserAccessToken = createAsyncThunk(
@@ -22,10 +17,10 @@ export interface PlayerState {
 
 export const playerSlice = createSlice({
     name: 'player',
-    initialState: { player: null },
+    initialState: { device_id: null },
     reducers: {
-      initialisePlayer: (state, action) => {
-        state.player = action.payload
+      setDeviceId: (state, action) => {
+        state.device_id = action.payload
       }
     }
     // extraReducers: (builder) => {
@@ -47,6 +42,6 @@ export const playerSlice = createSlice({
 
   export const selectPlayer = (state: any) => state.player;
 
-  export const { initialisePlayer } = playerSlice.actions;
+  export const { setDeviceId } = playerSlice.actions;
   
   export default playerSlice.reducer;

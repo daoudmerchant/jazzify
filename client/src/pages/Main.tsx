@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import userAPI from "../features/user/userAPI"
+import { setDeviceId } from "../features/player/playerSlice";
 
 interface Props {
     accessToken: string,
@@ -31,6 +31,7 @@ const Main = ({ accessToken }: Props) => {
     
             player.addListener('ready', ({ device_id }: { device_id: string}) => {
                 console.log('Ready with Device ID', device_id);
+                dispatch(setDeviceId(device_id))
             });
     
             player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
@@ -42,10 +43,7 @@ const Main = ({ accessToken }: Props) => {
     return (
         <div>
         <p>Home page (logged in, with token)</p>
-        <button onClick={async () => {
-            const data = await userAPI.getDevices(accessToken);
-            console.log(data)
-        }}>Play something</button>
+        <button>Play something</button>
     </div>
     )
 }

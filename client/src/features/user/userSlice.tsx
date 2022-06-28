@@ -27,7 +27,6 @@ export const getUserAccessToken = createAsyncThunk(
   'users/getAccessToken',
   async ({ code, state }: TokenQuery) => {
     const token = await userAPI.getToken({code, state});
-    console.log(token.access_token);
     const username = await userAPI.getUsername(token.access_token);
     const userDetails = { token, username };
     window.localStorage.setItem('jazzify', JSON.stringify(userDetails))

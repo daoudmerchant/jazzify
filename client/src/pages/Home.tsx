@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectUser } from "../features/user/userSlice";
-import { selectPlayer } from "../features/player/playerSlice";
-import { initialisePlayer } from "../features/player/playerSlice";
 import { getUserAccessToken } from "../features/user/userSlice";
 
 import Main from "./Main";
