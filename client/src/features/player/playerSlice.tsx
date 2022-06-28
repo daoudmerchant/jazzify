@@ -12,8 +12,8 @@ export const playKurt = createAsyncThunk(
   async (_, { getState }) => {
   // @ts-ignore
     const { user, player } = getState();
-    const playRequest = await playerAPI.playKurt({ deviceId: player.device_id, accessToken: user.token.access_token});
-    const data = await playRequest.json()
+    const response = await playerAPI.playKurt({ deviceId: player.device_id, accessToken: user.token.access_token});
+    const data = await response.json();
     console.log(data)
   },
   {

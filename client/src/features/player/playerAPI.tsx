@@ -12,6 +12,11 @@ const getDevices = async (accessToken: string) => {
   return await deviceResponse.json();
 }
 
+const confirmPlaylist = async () => {
+  // query user endpoint to check if Jazzify playlist exists
+  // If not, create it
+}
+
 const playKurt = async ({deviceId, accessToken}: {deviceId: string, accessToken: string}) =>
   await fetch(
     `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
@@ -23,11 +28,7 @@ const playKurt = async ({deviceId, accessToken}: {deviceId: string, accessToken:
         'Authorization': 'Bearer ' + accessToken
       },
       body: JSON.stringify({
-        context_uri: "spotify:album:6ga60ZhJrOpJVRDu0ENrst",
-        "offset": {
-          "position": 5
-        },
-        "position_ms": 0
+        uris: ["spotify:track:22MsyWQ5WFGv8GXP7qmzDP", "spotify:track:1kGQzSasZr4HY5CzjHqCPG"],
       })
     }
   )

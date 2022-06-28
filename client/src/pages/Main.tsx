@@ -1,6 +1,7 @@
 // @ts-nocheck sorry
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
+import Player from "../components/Player";
 import { setDeviceId } from "../features/player/playerSlice";
 import { playKurt } from "../features/player/playerSlice"
 
@@ -20,7 +21,7 @@ interface Artist {
     name: string
 }
 
-interface Track {
+export interface Track {
     name: string,
     album: Album
     artists: [Artist]
@@ -55,9 +56,7 @@ const Main = ({ accessToken }: Props) => {
                 getOAuthToken: (cb: (token: string) => void) => cb(accessToken),
                 volume: 0.5
             });
-
             setPlayer(player);
-    
             player.addListener('ready', ({ device_id }: { device_id: string}) => {
                 console.log('Ready with Device ID', device_id);
                 dispatch(setDeviceId(device_id))
@@ -73,12 +72,9 @@ const Main = ({ accessToken }: Props) => {
                 }
                 setTrack(state.track_window.current_track);
                 setPaused(state.paused);
-            
-            
                 // player.getCurrentState().then( state => { 
                 //     (!state)? setActive(false) : setActive(true) 
-                // });
-            
+                // }),
             });
             player.connect();
         }
@@ -87,25 +83,7 @@ const Main = ({ accessToken }: Props) => {
         <div>
             <p>Home page (logged in, with token)</p>
             <button onClick={() => dispatch(playKurt())}>Play Kurt</button>
-            <div className="container">
-                <div className="main-wrapper">
-                    <img src={track.album.images[0].url} 
-                        className="now-playing__cover" alt="" />
-
-                    <div className="now-playing__side">
-                        <div className="now-playing__name">{
-                                    track.name
-                                    }</div>
-
-                        <div className="now-playing__artist">{
-                                    track.artists[0].name
-                                    }</div>
-                    </div>
-                </div>
-            </div>
-            <button onClick={() => {
-                player.togglePlay()
-                }}>{paused ? "PLAY" : "PAUSE"}</button>
+            <Player track={track} paused={paused} player={player} togglePlay={() => player.togglePlay()} next={() => player.nextTrack()}/>
         </div>
     )
 }
