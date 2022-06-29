@@ -1,5 +1,5 @@
-// @ts-nocheck sorry
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
 import Player from "../components/Player";
 import { setDeviceId } from "../features/player/playerSlice";
@@ -27,6 +27,12 @@ export interface Track {
     artists: [Artist]
 }
 
+const MainContainer = styled.div`
+    display: grid;
+    grid-template-rows: 1fr 150px;
+    height: 100%;
+`
+
 const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
     const [player, setPlayer] = useState(null);
@@ -50,7 +56,9 @@ const Main = ({ accessToken }: Props) => {
         script.async = true;
         document.body.appendChild(script);
         
+        // @ts-ignore
         window.onSpotifyWebPlaybackSDKReady = () => {
+            // @ts-ignore
             const player = new window.Spotify.Player({
                 name: 'Jazzify',
                 getOAuthToken: (cb: (token: string) => void) => cb(accessToken),
@@ -70,6 +78,7 @@ const Main = ({ accessToken }: Props) => {
                 if (!state) {
                     return;
                 }
+                console.log(state.track_window);
                 setTrack(state.track_window.current_track);
                 setPaused(state.paused);
                 // player.getCurrentState().then( state => { 
@@ -78,13 +87,17 @@ const Main = ({ accessToken }: Props) => {
             });
             player.connect();
         }
-    }, [])
+    }, []) // eslint-disable-line
     return (
-        <div>
-            <p>Home page (logged in, with token)</p>
-            <button onClick={() => dispatch(playKurt())}>Play Kurt</button>
-            <Player track={track} paused={paused} player={player} togglePlay={() => player.togglePlay()} next={() => player.nextTrack()}/>
-        </div>
+        <MainContainer>
+            <section>
+                <p>Home page (logged in, with token)</p>
+                <button onClick={() => dispatch(playKurt())}>Play Kurt</button>
+            </section>
+            {/*
+            // @ts-ignore */}
+            <Player track={track} paused={paused} player={player}/>
+        </MainContainer>
     )
 }
 
