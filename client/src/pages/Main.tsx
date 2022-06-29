@@ -75,15 +75,15 @@ const Main = ({ accessToken }: Props) => {
                 if (!state) {
                     return;
                 }
-                // setTrack(state.track_window.current_track);
+                const currentTrack = state.track_window.current_track;
                 setTrack({
-                    name: state.track_window.current_track.name,
+                    name: currentTrack.name,
                     album: {
-                        name: state.track_window.album.name,
-                        uri: state.track_window.album.uri,
+                        name: currentTrack.album.name,
+                        uri: currentTrack.album.uri,
                     },
-                    albumCover: state.track_window.album.images[0].url,
-                    artists: state.track_window.artists
+                    albumCover: currentTrack.album.images[0].url,
+                    artists: currentTrack.artists
                 })
                 setPaused(state.paused);
                 // player.getCurrentState().then( state => { 
