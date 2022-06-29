@@ -9,22 +9,21 @@ interface Props {
     accessToken: string,
 }
 
-interface Image {
-    url: string
-}
-
 interface Album {
-    images: [Image]
+    name: string
+    uri: string
 }
 
 interface Artist {
     name: string
+    uri: string
 }
 
 export interface Track {
-    name: string,
+    name: string
     album: Album
-    artists: [Artist]
+    albumCover: string
+    artists: Artist[]
 }
 
 const MainContainer = styled.div`
@@ -40,13 +39,11 @@ const Main = ({ accessToken }: Props) => {
     const [track, setTrack] = useState<Track>({
         name: "",
         album: {
-            images: [
-                { url: "" }
-            ]
+            name: "",
+            uri: ""
         },
-        artists: [
-            { name: "" }
-        ]
+        albumCover: "",
+        artists: [{ name: "", uri: ""}]
     })
 
     useEffect(() => {
@@ -78,8 +75,16 @@ const Main = ({ accessToken }: Props) => {
                 if (!state) {
                     return;
                 }
-                console.log(state.track_window);
-                setTrack(state.track_window.current_track);
+                // setTrack(state.track_window.current_track);
+                setTrack({
+                    name: state.track_window.current_track.name,
+                    album: {
+                        name: state.track_window.album.name,
+                        uri: state.track_window.album.uri,
+                    },
+                    albumCover: state.track_window.album.images[0].url,
+                    artists: state.track_window.artists
+                })
                 setPaused(state.paused);
                 // player.getCurrentState().then( state => { 
                 //     (!state)? setActive(false) : setActive(true) 
