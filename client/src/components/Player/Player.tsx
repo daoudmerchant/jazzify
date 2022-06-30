@@ -1,14 +1,19 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
-import { Track } from "../pages/Main"
+// types
+import { Track } from "../../pages/Main"
 
-import backIcon from "../assets/back-inkubators.png";
-import nextIcon from "../assets/next-inkubators.png"
-import playIcon from "../assets/play-freepik.png";
-import pauseIcon from "../assets/pause-inkubators.png";
-import playlistIcon from "../assets/playlist-rlkas-dzihab.png";
-import upIcon from "../assets/up-roundicons.png";
+// icons
+import backIcon from "../../assets/back-inkubators.png";
+import nextIcon from "../../assets/next-inkubators.png"
+import playIcon from "../../assets/play-freepik.png";
+import pauseIcon from "../../assets/pause-inkubators.png";
+import playlistIcon from "../../assets/playlist-rlkas-dzihab.png";
+import upIcon from "../../assets/up-roundicons.png";
+
+// components
+import TrackInfo from "./TrackInfo";
 
 interface Props {
     track: Track,
@@ -19,7 +24,7 @@ interface Props {
 const PlayerContainer = styled.section`
     position: absolute;
     bottom: 0;
-    transition: 1s all;
+    transition: .5s all;
     background: linear-gradient(153deg, rgba(1,1,1,1) 0%,
                                         rgba(143,143,143,1) 19%,
                                         rgba(73,73,73,1) 42%,
@@ -31,8 +36,8 @@ const PlayerContainer = styled.section`
 const PlayerSheen = styled.div`
     height: 100%;
     background: linear-gradient(0deg, #404040 0%,
-                                      transparent 15%,
-                                      transparent 85%,
+                                      transparent 35%,
+                                      transparent 65%,
                                       #404040 100%);
 `
 
@@ -123,7 +128,7 @@ const ButtonIcon = styled.img`
 `
 
 const OpenIcon = styled(ButtonIcon)`
-    transition: .2s all;
+    transition: .4s all;
     transform: rotate(${(props: { $open: boolean }) => props.$open ? "180" : "0"}deg);
 `
 
@@ -136,10 +141,8 @@ const Player = ({ track, paused, player }: Props) => {
                     {track.name
                         ? <AlbumCover src={track.albumCover} alt={`Album cover for ${track.name}`} />
                         : <AlbumPlaceholder />}
-                    <div></div>
-                    <div></div>
+                    <TrackInfo track={track}/>
                 </PlayerFlexContainer>
-
                 {/* <div className="player__track-name">{
                     track.name
                 }</div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
-import Player from "../components/Player";
+import Player from "../components/Player/Player";
 import { setDeviceId } from "../features/player/playerSlice";
 import { playKurt } from "../features/player/playerSlice"
 
@@ -14,7 +14,7 @@ interface Album {
     uri: string
 }
 
-interface Artist {
+export interface Artist {
     name: string
     uri: string
 }
