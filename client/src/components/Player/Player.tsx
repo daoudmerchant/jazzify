@@ -1,5 +1,4 @@
-import { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 // hooks
 import { useStaggered } from "../../app/hooks";
@@ -7,13 +6,11 @@ import { useStaggered } from "../../app/hooks";
 // types
 import { Track } from "../../pages/Main"
 
-// icons
-import playlistIcon from "../../assets/playlist-rlkas-dzihab.png";
-import upIcon from "../../assets/up-roundicons.png";
-
 // components
 import TrackInfo from "./TrackInfo";
 import Controls from "./Controls";
+import UserButtons from "./UserButtons";
+import ArtistList from "./ArtistList";
 
 interface Props {
     track: Track,
@@ -72,34 +69,7 @@ const AlbumCover = styled.img`
     box-shadow: -5px 5px 7px -3px #000;
 `
 
-const UserButtonContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-`
 
-const Button = styled.button`
-    background-color: white;
-    mix-blend-mode: screen;
-    flex: 1;
-    border-radius: 18px;
-    &:not(:first-child) {
-        margin-top: 10px;
-    }
-    transition: .1s linear all;
-    &:active {
-        transform: scale(0.9);
-        filter: invert(0.1)
-    }
-`
-
-const ButtonIcon = styled.img`
-    height: 30px;
-`
-
-const OpenIcon = styled(ButtonIcon)`
-    transition: .4s all;
-    transform: rotate(${(props: { $open: boolean }) => props.$open ? "180" : "0"}deg);
-`
 
 const Player = ({ track }: Props) => {
     const [{open, first, second}, setOpen] = useStaggered(350)
@@ -112,16 +82,10 @@ const Player = ({ track }: Props) => {
                         : <AlbumPlaceholder />}
                     <TrackInfo open={second} track={track}/>
                 </PlayerFlexContainer>
+                <ArtistList open={second} />
                 <PlayerFlexContainer $above={true}>
                     <Controls open={second} />
-                    <UserButtonContainer>
-                        <Button>
-                            <ButtonIcon src={playlistIcon} alt="add to playlist icon"/>
-                        </Button>
-                        <Button onClick={() => setOpen(prev => !prev)}>
-                            <OpenIcon src={upIcon} alt="show more icon" $open={open}/>
-                        </Button>
-                    </UserButtonContainer>
+                    <UserButtons toggleOpen={() => setOpen(prev => !prev)} open={open} />
                 </PlayerFlexContainer>
             </PlayerSheen>
         </PlayerContainer>

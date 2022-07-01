@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 // icons
 import backIcon from "../../assets/back-inkubators.png";
@@ -14,11 +14,19 @@ import { PlayStateContext } from "../../pages/Main";
 // types
 import { PlayerState } from "../../pages/Main";
 
+const depressButton = (inverted: boolean) => css`
+    &:active {
+        transform: scale(0.9);
+        filter: invert(0.${inverted ? "9" : "1"})
+    }
+`
+
 const SkipButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 110px;
+
 `
 
 const SkipButton = styled.button`
@@ -26,6 +34,7 @@ const SkipButton = styled.button`
     color: white;
     transition: .3s all;
     opacity: ${(props: { $open: boolean}) => props.$open ? "1" : "0"};
+    ${depressButton(false)}
 `
 
 const SkipText = styled.p`
@@ -35,6 +44,10 @@ const SkipText = styled.p`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+`
+
+const Seconds = styled.span`
+    font-size: 15px;
 `
 
 const PlayerButtonContainer = styled.div`
@@ -50,13 +63,10 @@ const PlayerIcon = styled.img`
     max-height: ${(props: { $big: boolean }) => props.$big ? "45px" : "25px"};
     filter: invert(1);
     transition: .05s linear all;
-    &:active {
-        transform: scale(0.9);
-        filter: invert(0.9)
-    }
+    ${depressButton(true)}
 `
 
-const Skip = () => <SkipText>10</SkipText>
+const Skip = () => <SkipText>10<Seconds>s</Seconds></SkipText>
 
 interface Props {
     open: boolean
