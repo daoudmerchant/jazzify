@@ -1,9 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
 import Player from "../components/Player/Player";
 import { setDeviceId } from "../features/player/playerSlice";
 import { playKurt } from "../features/player/playerSlice"
+
+export interface PlayerState {
+    paused: boolean,
+    player: any
+}
+
+export const PlayStateContext = createContext<PlayerState>({ paused: false, player: {}});
 
 interface Props {
     accessToken: string,
@@ -101,7 +108,9 @@ const Main = ({ accessToken }: Props) => {
             </section>
             {/*
             // @ts-ignore */}
-            <Player track={track} paused={paused} player={player}/>
+            <PlayStateContext.Provider value={{paused, player}}>
+                <Player track={track} player={player}/>
+            </PlayStateContext.Provider>
         </MainContainer>
     )
 }

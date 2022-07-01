@@ -8,18 +8,15 @@ import { useStaggered } from "../../app/hooks";
 import { Track } from "../../pages/Main"
 
 // icons
-import backIcon from "../../assets/back-inkubators.png";
-import nextIcon from "../../assets/next-inkubators.png"
-import playIcon from "../../assets/play-freepik.png";
-import pauseIcon from "../../assets/pause-inkubators.png";
 import playlistIcon from "../../assets/playlist-rlkas-dzihab.png";
 import upIcon from "../../assets/up-roundicons.png";
 
 // components
 import TrackInfo from "./TrackInfo";
+import MainControls from "./MainControls";
+
 interface Props {
     track: Track,
-    paused: boolean,
     player: any
 }
 
@@ -75,42 +72,12 @@ const AlbumCover = styled.img`
     box-shadow: -5px 5px 7px -3px #000;
 `
 
-const PlayerButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-around;
-    padding-inline: 10px;
-    align-items: center;
-    flex-grow: 1;
-    max-width: 170px;
-`
-
-const buttonReset = css`
-    border: none;
-    background-color: transparent;
-`
-
-const PlayerButton = styled.button`
-    ${buttonReset}
-    color: white;
-`
-
-const PlayerIcon = styled.img`
-    max-height: ${(props: { $big: boolean }) => props.$big ? "45px" : "25px"};
-    filter: invert(1);
-    transition: .05s linear all;
-    &:active {
-        transform: scale(0.9);
-        filter: invert(0.9)
-    }
-`
-
 const UserButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
 
 const Button = styled.button`
-    ${buttonReset}
     background-color: white;
     mix-blend-mode: screen;
     flex: 1;
@@ -134,7 +101,7 @@ const OpenIcon = styled(ButtonIcon)`
     transform: rotate(${(props: { $open: boolean }) => props.$open ? "180" : "0"}deg);
 `
 
-const Player = ({ track, paused, player }: Props) => {
+const Player = ({ track }: Props) => {
     const [{first, second}, setOpen] = useStaggered(300)
     return (
         <PlayerContainer $open={first}>
@@ -145,26 +112,9 @@ const Player = ({ track, paused, player }: Props) => {
                         : <AlbumPlaceholder />}
                     <TrackInfo open={second} track={track}/>
                 </PlayerFlexContainer>
-                {/* <div className="player__track-name">{
-                    track.name
-                }</div>
-
-                <div className="player__artist">{
-                    track.artists[0].name
-                }</div> */}
                 <PlayerFlexContainer $above={true}>
                     <div></div>
-                    <PlayerButtonContainer>
-                        <PlayerButton onClick={() => player.previousTrack()}>
-                            <PlayerIcon src={backIcon} alt="previous track icon" $big={false} />
-                        </PlayerButton>
-                        <PlayerButton onClick={() => player.togglePlay()}>
-                            <PlayerIcon src={paused ? playIcon : pauseIcon} alt={`${paused ? "play" : "pause"} icon`} $big={true} />
-                        </PlayerButton>
-                        <PlayerButton onClick={() => player.nextTrack()}>
-                            <PlayerIcon src={nextIcon} alt="next track icon" $big={false} />
-                        </PlayerButton>
-                    </PlayerButtonContainer>
+                    <MainControls />
                     <UserButtonContainer>
                         <Button>
                             <ButtonIcon src={playlistIcon} alt="add to playlist icon"/>
