@@ -13,7 +13,7 @@ import upIcon from "../../assets/up-roundicons.png";
 
 // components
 import TrackInfo from "./TrackInfo";
-import MainControls from "./MainControls";
+import Controls from "./Controls";
 
 interface Props {
     track: Track,
@@ -102,7 +102,7 @@ const OpenIcon = styled(ButtonIcon)`
 `
 
 const Player = ({ track }: Props) => {
-    const [{first, second}, setOpen] = useStaggered(300)
+    const [{open, first, second}, setOpen] = useStaggered(300)
     return (
         <PlayerContainer $open={first}>
             <PlayerSheen>
@@ -113,14 +113,13 @@ const Player = ({ track }: Props) => {
                     <TrackInfo open={second} track={track}/>
                 </PlayerFlexContainer>
                 <PlayerFlexContainer $above={true}>
-                    <div></div>
-                    <MainControls />
+                    <Controls open={second} />
                     <UserButtonContainer>
                         <Button>
                             <ButtonIcon src={playlistIcon} alt="add to playlist icon"/>
                         </Button>
                         <Button onClick={() => setOpen(prev => !prev)}>
-                            <OpenIcon src={upIcon} alt="show more icon" $open={first}/>
+                            <OpenIcon src={upIcon} alt="show more icon" $open={open}/>
                         </Button>
                     </UserButtonContainer>
                 </PlayerFlexContainer>

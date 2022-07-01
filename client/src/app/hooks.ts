@@ -17,6 +17,7 @@ export const useBoolean = (bool = null): [ boolean | null, (() => void)]  => {
 }
 
 interface Staggered {
+    open: boolean
     first: boolean,
     second: boolean
 }
@@ -35,7 +36,7 @@ export const useStaggered = (ms: number): [Staggered, React.Dispatch<React.SetSt
         setTimeout(() => setFirstOpen(false), ms)
     })
     return [
-        { first: firstOpen, second: secondOpen },
+        { open, first: firstOpen, second: secondOpen },
         setOpen
     ]
 }
