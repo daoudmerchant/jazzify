@@ -37,15 +37,16 @@ const OpenIcon = styled(ButtonIcon)`
 interface Props {
     toggleOpen: () => void,
     open: boolean
+    ready: boolean
 }
 
-const UserButtons = ({toggleOpen, open}: Props) => {
+const UserButtons = ({toggleOpen, open, ready}: Props) => {
     return (
         <UserButtonContainer>
-            <Button>
+            <Button disabled={!ready}>
                 <ButtonIcon src={playlistIcon} alt="add to playlist icon"/>
             </Button>
-            <Button onClick={toggleOpen}>
+            <Button onClick={toggleOpen} disabled={!ready}>
                 <OpenIcon src={upIcon} alt="show more icon" $open={open}/>
             </Button>
         </UserButtonContainer>

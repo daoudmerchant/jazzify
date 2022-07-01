@@ -7,6 +7,10 @@ import InstrumentButton from "./InstrumentButton";
 // icons
 import InstrumentIcons from "../../assets/instrumentIcons";
 
+const SelectionContainer = styled.section`
+    background-color: #F0D9E7;
+`
+
 const ButtonContainer = styled.div`
     width: 100vw;
     display: grid;
@@ -15,18 +19,22 @@ const ButtonContainer = styled.div`
     padding-inline: 10px;
 `
 
+const InstrumentIcon = styled.img`
+    filter: invert(19%) sepia(64%) saturate(4790%) hue-rotate(251deg) brightness(96%) contrast(102%);
+`
+
 const Selection = () => {
     return (
-        <div>
+        <SelectionContainer>
             <ButtonContainer>
                 {InstrumentIcons.map(({name, url}) => (
                     <InstrumentButton key={name}>
-                        <img src={url} alt={name}/>
+                        <InstrumentIcon src={url} alt={name}/>
                     </InstrumentButton>
                 ))}
             </ButtonContainer>
             <Form/>
-        </div>
+        </SelectionContainer>
     )
 }
 

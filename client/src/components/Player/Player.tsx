@@ -85,7 +85,7 @@ const Player = ({ track }: Props) => {
                 <ArtistList open={second} />
                 <PlayerFlexContainer $above={true}>
                     <Controls open={second} />
-                    <UserButtons toggleOpen={() => setOpen(prev => !prev)} open={open} />
+                    <UserButtons ready={!!track.name.length} toggleOpen={() => setOpen(prev => !prev)} open={open} />
                 </PlayerFlexContainer>
             </PlayerSheen>
         </PlayerContainer>
