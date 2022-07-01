@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 // icons
-import playlistIcon from "../../assets/playlist-rlkas-dzihab.png";
-import upIcon from "../../assets/up-roundicons.png";
+import playlistIcon from "../../assets/playerIcons/playlist-rlkas-dzihab.png";
+import upIcon from "../../assets/playerIcons/up-roundicons.png";
 
 const UserButtonContainer = styled.div`
     display: flex;

@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
 import Player from "../components/Player/Player";
 import { setDeviceId } from "../features/player/playerSlice";
-import { playKurt } from "../features/player/playerSlice"
+
+import Selection from "../components/Selection/Selection";
+
 
 export interface PlayerState {
     paused: boolean,
@@ -102,10 +104,7 @@ const Main = ({ accessToken }: Props) => {
     }, []) // eslint-disable-line
     return (
         <MainContainer>
-            <section>
-                <p>Home page (logged in, with token)</p>
-                <button onClick={() => dispatch(playKurt())}>Play Kurt</button>
-            </section>
+            <Selection />
             {/*
             // @ts-ignore */}
             <PlayStateContext.Provider value={{paused, player}}>

@@ -2,12 +2,12 @@ import { useContext } from "react";
 import styled, {css} from "styled-components";
 
 // icons
-import backIcon from "../../assets/back-inkubators.png";
-import nextIcon from "../../assets/next-inkubators.png"
-import playIcon from "../../assets/play-freepik.png";
-import pauseIcon from "../../assets/pause-inkubators.png";
-import curveLeft from "../../assets/curve-left-revicon.png";
-import curveRight from "../../assets/curve-right-revicon.png";
+import backIcon from "../../assets/playerIcons/back-inkubators.png";
+import nextIcon from "../../assets/playerIcons/next-inkubators.png"
+import playIcon from "../../assets/playerIcons/play-freepik.png";
+import pauseIcon from "../../assets/playerIcons/pause-inkubators.png";
+import curveLeft from "../../assets/playerIcons/curve-left-revicon.png";
+import curveRight from "../../assets/playerIcons/curve-right-revicon.png";
 
 import { PlayStateContext } from "../../pages/Main";
 
