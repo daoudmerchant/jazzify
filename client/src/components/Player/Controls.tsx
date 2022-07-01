@@ -17,7 +17,11 @@ import { PlayerState } from "../../pages/Main";
 const depressButton = (inverted: boolean) => css`
     &:active {
         transform: scale(0.9);
-        filter: invert(0.${inverted ? "9" : "1"})
+        filter: invert(0.${inverted ? "9" : "1"});
+    }
+    &:disabled {
+        transform: scale(1);
+        filter: invert(0);
     }
 `
 
@@ -26,7 +30,6 @@ const SkipButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 110px;
-
 `
 
 const SkipButton = styled.button`

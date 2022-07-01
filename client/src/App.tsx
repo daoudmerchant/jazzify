@@ -3,7 +3,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
@@ -20,7 +20,7 @@ const GlobalStyles = createGlobalStyle`
 
   #root {
     display: grid;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 70px 1fr;
   }
 
   * {
@@ -33,20 +33,25 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
+const Main = styled.main`
+  background: linear-gradient(138deg, #fcb4f5 0%, #fae6f7 20%, #e0faff 100%);
+  overflow: hidden;
+`
+
 function App() {
   return (
     <>
       <GlobalStyles />
         <Router>
           <Nav/>
-          <main>
+          <Main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="about" element={<About />} />
               <Route path="login" element={<Login />} />
               <Route path="settings" element={<Settings />} />
             </Routes>
-          </main>
+          </Main>
         </Router>
     </>
   );

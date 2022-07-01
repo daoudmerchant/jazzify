@@ -17,12 +17,23 @@ const Button = styled.button`
         transform: scale(0.95);
         box-shadow: none;
     }
+    background-color: ${(props: { $selected: boolean}) => props.$selected ? "#cff7ff" : "transparent"}
 `
 
 interface Props {
     children: JSX.Element,
+    selected: boolean,
+    disabled: boolean,
+    updateList: () => void
   };
 
-const InstrumentButton = ({children}: Props) => <Button>{children}</Button>
+const InstrumentButton = ({children, selected, disabled, updateList}: Props) => (
+    <Button
+        disabled={disabled}
+        $selected={selected}
+        onClick={updateList}
+    >
+        {children}
+    </Button>)
 
 export default InstrumentButton;

@@ -27,6 +27,7 @@ const PlayerContainer = styled.section`
                                         rgba(0,0,0,1) 100%);
     height: ${(props: { $open: boolean }) => props.$open ? "100vh" : "150px"};
     width: 100%;
+    overflow: hidden;
 `
 
 const PlayerSheen = styled.div`
@@ -73,6 +74,7 @@ const AlbumCover = styled.img`
 
 const Player = ({ track }: Props) => {
     const [{open, first, second}, setOpen] = useStaggered(350)
+    const ready = Boolean(track.name.length)
     return (
         <PlayerContainer $open={first}>
             <PlayerSheen>
@@ -85,7 +87,7 @@ const Player = ({ track }: Props) => {
                 <ArtistList open={second} />
                 <PlayerFlexContainer $above={true}>
                     <Controls open={second} />
-                    <UserButtons ready={!!track.name.length} toggleOpen={() => setOpen(prev => !prev)} open={open} />
+                    <UserButtons ready={ready} toggleOpen={() => setOpen(prev => !prev)} open={open} />
                 </PlayerFlexContainer>
             </PlayerSheen>
         </PlayerContainer>
