@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from './store';
 
@@ -13,5 +13,29 @@ export const useBoolean = (bool = null): [ boolean | null, (() => void)]  => {
         () => {
             setBoolean(prev => !prev)
         }
+    ]
+}
+
+interface Staggered {
+    first: boolean,
+    second: boolean
+}
+
+export const useStaggered = (ms: number): [Staggered, React.Dispatch<React.SetStateAction<boolean>>] => {
+    const [open, setOpen] = useState(false);
+    const [firstOpen, setFirstOpen] = useState(false);
+    const [secondOpen, setSecondOpen] = useState(false);
+    useEffect(() => {
+        if (open) {
+            setFirstOpen(true);
+            setTimeout(() => setSecondOpen(true), ms);
+            return;
+        }
+        setSecondOpen(false);
+        setTimeout(() => setFirstOpen(false), ms)
+    })
+    return [
+        { first: firstOpen, second: secondOpen },
+        setOpen
     ]
 }

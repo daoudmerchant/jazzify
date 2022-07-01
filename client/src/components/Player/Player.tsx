@@ -1,6 +1,9 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
+// hooks
+import { useStaggered } from "../../app/hooks";
+
 // types
 import { Track } from "../../pages/Main"
 
@@ -14,7 +17,6 @@ import upIcon from "../../assets/up-roundicons.png";
 
 // components
 import TrackInfo from "./TrackInfo";
-
 interface Props {
     track: Track,
     paused: boolean,
@@ -133,15 +135,15 @@ const OpenIcon = styled(ButtonIcon)`
 `
 
 const Player = ({ track, paused, player }: Props) => {
-    const [open, setOpen] = useState(false)
+    const [{first, second}, setOpen] = useStaggered(300)
     return (
-        <PlayerContainer $open={open}>
+        <PlayerContainer $open={first}>
             <PlayerSheen>
                 <PlayerFlexContainer $above={false}>
                     {track.name
                         ? <AlbumCover src={track.albumCover} alt={`Album cover for ${track.name}`} />
                         : <AlbumPlaceholder />}
-                    <TrackInfo track={track}/>
+                    <TrackInfo open={second} track={track}/>
                 </PlayerFlexContainer>
                 {/* <div className="player__track-name">{
                     track.name
@@ -168,7 +170,7 @@ const Player = ({ track, paused, player }: Props) => {
                             <ButtonIcon src={playlistIcon} alt="add to playlist icon"/>
                         </Button>
                         <Button onClick={() => setOpen(prev => !prev)}>
-                            <OpenIcon src={upIcon} alt="show more icon" $open={open}/>
+                            <OpenIcon src={upIcon} alt="show more icon" $open={first}/>
                         </Button>
                     </UserButtonContainer>
                 </PlayerFlexContainer>
