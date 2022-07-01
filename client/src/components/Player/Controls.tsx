@@ -6,11 +6,36 @@ import backIcon from "../../assets/back-inkubators.png";
 import nextIcon from "../../assets/next-inkubators.png"
 import playIcon from "../../assets/play-freepik.png";
 import pauseIcon from "../../assets/pause-inkubators.png";
+import curveLeft from "../../assets/curve-left-revicon.png";
+import curveRight from "../../assets/curve-right-revicon.png";
 
 import { PlayStateContext } from "../../pages/Main";
 
 // types
 import { PlayerState } from "../../pages/Main";
+
+const SkipButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+`
+
+const SkipButton = styled.button`
+    position: relative;
+    color: white;
+    transition: .3s all;
+    opacity: ${(props: { $open: boolean}) => props.$open ? "1" : "0"};
+`
+
+const SkipText = styled.p`
+    margin: 0;
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+`
 
 const PlayerButtonContainer = styled.div`
     display: flex;
@@ -19,10 +44,6 @@ const PlayerButtonContainer = styled.div`
     align-items: center;
     flex-grow: 1;
     max-width: 170px;
-`
-
-const PlayerButton = styled.button`
-    color: white;
 `
 
 const PlayerIcon = styled.img`
@@ -34,6 +55,8 @@ const PlayerIcon = styled.img`
         filter: invert(0.9)
     }
 `
+
+const Skip = () => <SkipText>10</SkipText>
 
 interface Props {
     open: boolean
@@ -50,20 +73,26 @@ const Controls = ({open}: Props) => {
     }
     return (
         <>
-            <div>
-                <button onClick={() => skip(true)}>Back</button>
-                <button onClick={() => skip(false)}>Forwards</button>
-            </div>
+            <SkipButtonContainer>
+                <SkipButton $open={open} disabled={!open} onClick={() => skip(true)}>
+                    <PlayerIcon src={curveLeft} alt="skip back icon" $big={true} />
+                    <Skip/>
+                </SkipButton>
+                <SkipButton $open={open} disabled={!open} onClick={() => skip(false)}>
+                    <PlayerIcon src={curveRight} alt="skip forwards icon" $big={true} />
+                    <Skip/>
+                </SkipButton>
+            </SkipButtonContainer>
             <PlayerButtonContainer>
-                <PlayerButton onClick={() => player.previousTrack()}>
+                <button onClick={() => player.previousTrack()}>
                     <PlayerIcon src={backIcon} alt="previous track icon" $big={false} />
-                </PlayerButton>
-                <PlayerButton onClick={() => player.togglePlay()}>
+                </button>
+                <button onClick={() => player.togglePlay()}>
                     <PlayerIcon src={paused ? playIcon : pauseIcon} alt={`${paused ? "play" : "pause"} icon`} $big={true} />
-                </PlayerButton>
-                <PlayerButton onClick={() => player.nextTrack()}>
+                </button>
+                <button onClick={() => player.nextTrack()}>
                     <PlayerIcon src={nextIcon} alt="next track icon" $big={false} />
-                </PlayerButton>
+                </button>
             </PlayerButtonContainer>
         </>
     )

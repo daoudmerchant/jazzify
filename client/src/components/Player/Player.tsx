@@ -102,7 +102,7 @@ const OpenIcon = styled(ButtonIcon)`
 `
 
 const Player = ({ track }: Props) => {
-    const [{open, first, second}, setOpen] = useStaggered(300)
+    const [{open, first, second}, setOpen] = useStaggered(350)
     return (
         <PlayerContainer $open={first}>
             <PlayerSheen>
