@@ -3,12 +3,16 @@ import styled from "styled-components";
 
 import Form from "./Form";
 import InstrumentButton from "./InstrumentButton";
+import Progress from "./Progress";
 
 // icons
 import InstrumentIcons from "../../assets/instrumentIcons";
 import { useList } from "../../app/hooks";
 
 const SelectionContainer = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `
 
 const ButtonContainer = styled.div`
@@ -31,22 +35,24 @@ const Selection = () => {
     return (
         <SelectionContainer>
             <ButtonContainer>
-                {InstrumentIcons.map(({name, url}) => {
+                {InstrumentIcons.map(({ name, url }) => {
                     // @ts-ignore
                     const existsInList = list.find(x => x === name);
                     return (
                         <InstrumentButton
-                        key={name}
-                        selected={existsInList}
-                        // @ts-ignore
-                        updateList={() => updateList(name)}
-                        disabled={list.length === MAX && !existsInList}
-                    >
-                        <InstrumentIcon src={url} alt={name}/>
-                    </InstrumentButton>)
+                            key={name}
+                            selected={existsInList}
+                            // @ts-ignore
+                            updateList={() => updateList(name)}
+                            disabled={list.length === MAX && !existsInList}
+                        >
+                            <InstrumentIcon src={url} alt={name} />
+                        </InstrumentButton>)
                 })}
             </ButtonContainer>
-            <Form/>
+            <Form>
+                <Progress count={list.length} />
+            </Form>
         </SelectionContainer>
     )
 }

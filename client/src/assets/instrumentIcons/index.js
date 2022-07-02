@@ -6,6 +6,7 @@ import microphone from "./microphone-freepik.png";
 import piano from "./piano-freepik.png";
 import saxophone from "./saxophone-freepik.png";
 import trumpet from "./trumpet-freepik.png";
+import trombone from "./trombone-freepik.png";
 import vibraphone from "./vibraphone-freepik.png";
 
 export default [
@@ -16,6 +17,10 @@ export default [
     {
         name: "trumpet",
         url: trumpet
+    },
+    {
+        name: "trombone",
+        url: trombone
     },
     {
         name: "microphone",
@@ -46,6 +51,3 @@ export default [
         url: vibraphone
     }
 ]
-
-// TODO: Download trombone
-
