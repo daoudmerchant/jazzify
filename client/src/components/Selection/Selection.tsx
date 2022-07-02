@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Form from "./Form";
+import SearchForm from "./SearchForm";
 import InstrumentButton from "./InstrumentButton";
 import Progress from "./Progress";
 
@@ -21,6 +21,7 @@ const ButtonContainer = styled.div`
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     padding-inline: 10px;
+    padding-top: 10px;
 `
 
 const InstrumentIcon = styled.img`
@@ -30,8 +31,7 @@ const InstrumentIcon = styled.img`
 const MAX = 3;
 
 const Selection = () => {
-    const [list, updateList] = useList(MAX);
-    console.log(list)
+    const [list, updateList, reset] = useList(MAX);
     return (
         <SelectionContainer>
             <ButtonContainer>
@@ -50,9 +50,11 @@ const Selection = () => {
                         </InstrumentButton>)
                 })}
             </ButtonContainer>
-            <Form>
+            {/*
+            // @ts-ignore */}
+            <SearchForm count={list.length} reset={reset}>
                 <Progress count={list.length} />
-            </Form>
+            </SearchForm>
         </SelectionContainer>
     )
 }

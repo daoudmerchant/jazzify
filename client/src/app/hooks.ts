@@ -16,7 +16,10 @@ export const useList = (max: number) => {
                 ? prev.filter(x => x !== item)
                 : prev.length < max
                 ? [item, ...prev]
-                : prev)
+                : prev),
+        () => {
+            setList([])
+        }
     ]
 }
 

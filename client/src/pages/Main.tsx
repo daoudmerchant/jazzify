@@ -12,7 +12,7 @@ export interface PlayerState {
     player: any
 }
 
-export const PlayStateContext = createContext<PlayerState>({ paused: false, player: {}});
+export const PlayStateContext = createContext<PlayerState>({ paused: false, player: {} });
 
 interface Props {
     accessToken: string,
@@ -52,7 +52,7 @@ const Main = ({ accessToken }: Props) => {
             uri: ""
         },
         albumCover: "",
-        artists: [{ name: "", uri: ""}]
+        artists: [{ name: "", uri: "" }]
     })
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const Main = ({ accessToken }: Props) => {
         script.src = "https://sdk.scdn.co/spotify-player.js";
         script.async = true;
         document.body.appendChild(script);
-        
+
         // @ts-ignore
         window.onSpotifyWebPlaybackSDKReady = () => {
             // @ts-ignore
@@ -71,11 +71,11 @@ const Main = ({ accessToken }: Props) => {
                 volume: 0.5
             });
             setPlayer(player);
-            player.addListener('ready', ({ device_id }: { device_id: string}) => {
+            player.addListener('ready', ({ device_id }: { device_id: string }) => {
                 console.log('Ready with Device ID', device_id);
                 dispatch(setDeviceId(device_id))
             });
-    
+
             player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
                 console.log('Device ID has gone offline', device_id);
             });
@@ -107,8 +107,8 @@ const Main = ({ accessToken }: Props) => {
             <Selection />
             {/*
             // @ts-ignore */}
-            <PlayStateContext.Provider value={{paused, player}}>
-                <Player track={track} player={player}/>
+            <PlayStateContext.Provider value={{ paused, player }}>
+                <Player track={track} player={player} />
             </PlayStateContext.Provider>
         </MainContainer>
     )
