@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
-const indexRouter = require('./routes/index');
+const apiRouter = require('./routes/api');
 const spotifyRouter = require('./routes/spotify');
 
 const app = express();
