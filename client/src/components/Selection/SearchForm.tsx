@@ -19,56 +19,47 @@ const Form = styled.form`
 `
 
 const Submit = styled.button`
-    justify-text: center;
     transition: .2s all;
     height: 60px;
     border-radius: 30px;
     margin-top: 20px;
     width: 100%;
     font-size: 20px;
-    color: white;
+    color: ${(props: { $color: string, disabled: boolean } ) => props.disabled ? props.$color : "white"};
+    border: 3px solid ${(props: { $color: string, disabled: boolean } ) => props.disabled ? props.$color : "white"};
     font-weight: bold;
     box-shadow: ${(props: { $color: string, disabled: boolean } ) => props.disabled ? "none" : "-5px 3px 12px -3px lightgrey"};
-    background-color: ${(props: { $color: string, disabled: boolean }) => props.$color};
+    background-color: ${(props: { $color: string, disabled: boolean }) => props.disabled ? "transparent" : props.$color};
 `
 
 const SearchForm = ({ children, count, reset }: Props) => {
     const { status } = useAppSelector(selectPlayer);
-    const [succeeded, setSucceeded] = useState(false)
-    useEffect(() => {
-        if (status !== "idle" || succeeded) {
-            return;
-        }
-        setSucceeded(true);
-    }, [status])
-    useEffect(() => {
-        if (!succeeded) {
-            return;
-        }
-        setSucceeded(false);
-    }, [count])
+    const [submitted, setSubmitted] = useState(false);
     const dispatch = useAppDispatch();
+    useEffect(() => {
+        setSubmitted(false);
+    }, [count])
     const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
         e.preventDefault();
-        if (succeeded) {
-            console.log("resetting")
+        if (submitted) {
             return reset();
         }
         await dispatch(playKurt());
+        setSubmitted(true);
     }
-    const buttonStatus = succeeded
-        ? {
-            disabled: false,
-            text: "Clear",
-            color: "aliceblue"
-        }
-        : status === "loading"
+    const buttonStatus = status === "loading"
             ? {
                 disabled: true,
                 text: "Loading",
-                color: "lightblue"
+                color: "#707070"
             }
-            : count
+            : submitted
+                ? {
+                    disabled: false,
+                    text: "Clear selection",
+                    color: "#59dbff"
+                }
+                : count
                 ? {
                     disabled: false,
                     text: "Find me some jazz!",

@@ -64,8 +64,13 @@ const Progress = ({ count }: Props) => {
             case 0:
                 if (right.open) {
                     setRightExpanded(false);
-                    setTimeout(() => setMiddleExpanded(false), 170);
-                    setTimeout(() => setLeftExpanded(false), 340);
+                    setTimeout(() => setMiddleExpanded(false), 190);
+                    setTimeout(() => setLeftExpanded(false), 380);
+                    return;
+                }
+                if (middle.open) {
+                    setMiddleExpanded(false);
+                    setTimeout(() => setLeftExpanded(false), 190);
                     return;
                 }
                 setLeftExpanded(false);
