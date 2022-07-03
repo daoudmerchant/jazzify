@@ -17,7 +17,12 @@ const confirmPlaylist = async () => {
   // If not, create it
 }
 
-const playKurt = async ({deviceId, accessToken}: {deviceId: string, accessToken: string}) =>
+const playTracks = async ({deviceId, accessToken, instruments}: {deviceId: string, accessToken: string, instruments: [string]}) => {
+  let instrumentQuery = new URLSearchParams();
+  instruments.forEach(instr => instrumentQuery.append('instruments', instr));
+  const response = await fetch(`http://localhost:3001/api/tracks?${instrumentQuery.toString()}`);
+  const tracks = await response.json();
+  const uris = tracks.map(({uri}: {uri: string}) => `spotify:track:${uri}`);
   await fetch(
     `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
     {
@@ -28,9 +33,11 @@ const playKurt = async ({deviceId, accessToken}: {deviceId: string, accessToken:
         'Authorization': 'Bearer ' + accessToken
       },
       body: JSON.stringify({
-        uris: ["spotify:track:22MsyWQ5WFGv8GXP7qmzDP", "spotify:track:1kGQzSasZr4HY5CzjHqCPG"],
+        uris
       })
     }
-  )
+  );
+  return tracks;
+}
 
-export default { getDevices, playKurt }
+export default { getDevices, playTracks }

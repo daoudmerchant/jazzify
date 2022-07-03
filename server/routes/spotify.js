@@ -51,8 +51,6 @@ router.get('/callback', async (req, res) => {
       }
     })
     const token = await response.json();
-    console.log("SUCCESS")
-    console.log(token)
     res.json(token)
   } catch(e) {
     res.json({error: e.message})

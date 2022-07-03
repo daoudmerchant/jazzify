@@ -52,7 +52,7 @@ const Selection = () => {
             </ButtonContainer>
             {/*
             // @ts-ignore */}
-            <SearchForm count={list.length} reset={reset}>
+            <SearchForm list={list} reset={reset}>
                 <Progress count={list.length} />
             </SearchForm>
         </SelectionContainer>

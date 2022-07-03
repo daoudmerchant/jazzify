@@ -3,11 +3,11 @@ import { useAppSelector } from "../../app/hooks";
 import { selectPlayer } from "../../features/player/playerSlice";
 import styled from "styled-components";
 import { useAppDispatch } from "../../app/hooks";
-import { playKurt } from "../../features/player/playerSlice";
+import { playTracks } from "../../features/player/playerSlice";
 
 interface Props {
     children: JSX.Element
-    count: number
+    list: [string]
     reset: () => void
 }
 
@@ -32,19 +32,19 @@ const Submit = styled.button`
     background-color: ${(props: { $color: string, disabled: boolean }) => props.disabled ? "transparent" : props.$color};
 `
 
-const SearchForm = ({ children, count, reset }: Props) => {
+const SearchForm = ({ children, list, reset }: Props) => {
     const { status } = useAppSelector(selectPlayer);
     const [submitted, setSubmitted] = useState(false);
     const dispatch = useAppDispatch();
     useEffect(() => {
         setSubmitted(false);
-    }, [count])
+    }, [list])
     const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
         e.preventDefault();
         if (submitted) {
             return reset();
         }
-        await dispatch(playKurt());
+        await dispatch(playTracks(list));
         setSubmitted(true);
     }
     const buttonStatus = status === "loading"
@@ -59,7 +59,7 @@ const SearchForm = ({ children, count, reset }: Props) => {
                     text: "Clear selection",
                     color: "#59dbff"
                 }
-                : count
+                : list.length
                 ? {
                     disabled: false,
                     text: "Find me some jazz",

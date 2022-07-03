@@ -31,7 +31,7 @@ export default [
         url: piano
     },
     {
-        name: "double bass",
+        name: "bass",
         url: bass
     },
     {
@@ -39,11 +39,7 @@ export default [
         url: drums
     },
     {
-        name: "acoustic guitar",
-        url: acousticGuitar
-    },
-    {
-        name: "electric guitar",
+        name: "guitar",
         url: electricGuitar
     },
     {

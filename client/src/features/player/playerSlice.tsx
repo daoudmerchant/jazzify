@@ -6,13 +6,13 @@ export interface PlayerState {
   status: 'idle' | 'loading' | 'failed';
 }
 
-export const playKurt = createAsyncThunk(
-  'player/playKurt',
+export const playTracks = createAsyncThunk(
+  'player/playTracks',
   // @ts-ignore
-  async (_, { getState }) => {
+  async (instruments: [string], { getState }) => {
     // @ts-ignore
     const { user, player } = getState();
-    await playerAPI.playKurt({ deviceId: player.device_id, accessToken: user.token.access_token });
+    await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
   },
   {
     condition: (_, { getState }) => {
@@ -58,13 +58,13 @@ export const playerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(playKurt.pending, (state) => {
+      .addCase(playTracks.pending, (state) => {
         state.status = "loading"
       })
-      .addCase(playKurt.fulfilled, (state) => {
+      .addCase(playTracks.fulfilled, (state) => {
         state.status = "idle"
       })
-      .addCase(playKurt.rejected, (state) => {
+      .addCase(playTracks.rejected, (state) => {
         state.status = "failed"
       });
   }
