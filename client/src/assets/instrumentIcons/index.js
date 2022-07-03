@@ -35,7 +35,7 @@ export default [
         url: bass
     },
     {
-        name: "drum set",
+        name: "drums",
         url: drums
     },
     {

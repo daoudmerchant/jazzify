@@ -62,7 +62,7 @@ const SearchForm = ({ children, count, reset }: Props) => {
                 : count
                 ? {
                     disabled: false,
-                    text: "Find me some jazz!",
+                    text: "Find me some jazz",
                     color: "lightgreen"
                 }
                 : {
