@@ -56,6 +56,9 @@ const Main = ({ accessToken }: Props) => {
     })
 
     useEffect(() => {
+        if (!accessToken) {
+            return;
+        }
         // Have to initialise and store here because Redux reducers can't have side effects :(
         const script = document.createElement("script");
         script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -101,7 +104,7 @@ const Main = ({ accessToken }: Props) => {
             });
             player.connect();
         }
-    }, []) // eslint-disable-line
+    }, [accessToken]) // eslint-disable-line
     return (
         <MainContainer>
             <Selection />

@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import playerAPI from './playerAPI';
 
+import { cancelOnLoading } from '../featureHelpers';
+
 export interface PlayerState {
   device_id: string,
   status: 'idle' | 'loading' | 'failed';
+  tracks: [string]
 }
 
 export const playTracks = createAsyncThunk(
@@ -14,16 +17,7 @@ export const playTracks = createAsyncThunk(
     const { user, player } = getState();
     await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
   },
-  {
-    condition: (_, { getState }) => {
-      // @ts-ignore
-      const { player: status } = getState()
-      if (status === 'fulfilled' || status === 'loading') {
-        // Already fetched or in progress, don't need to re-fetch
-        return false
-      }
-    },
-  }
+  cancelOnLoading('player')
 )
 
 // TODO: Add backend

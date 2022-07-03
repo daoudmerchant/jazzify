@@ -57,4 +57,24 @@ router.get('/callback', async (req, res) => {
   }
 });
 
+router.get('/refresh', async (req, res) => {
+  const formBody = new URLSearchParams();
+  formBody.append('grant_type', 'refresh_token');
+  formBody.append('refresh_token'. req.query.refreshToken);
+  try {
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: "POST",
+      body: formBody,
+      headers: {
+        'Authorization': `Basic ${Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`).toString('base64')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    const accessToken = await response.json();
+    res.json({access_token, accessToken});
+  } catch(e) {
+    res.json({error: e.message});
+  }
+});
+
 module.exports = router;

@@ -1,10 +1,16 @@
 import { TokenQuery } from "./userSlice";
 
-const getToken = async ({ code, state }: TokenQuery) => {
+const getNewToken = async ({ code, state }: TokenQuery) => {
     const response = await fetch(
         `http://localhost:3001/spotify/callback?${new URLSearchParams({code, state})}`
     );
-    return await response.json();
+    const token = await response.json();
+    return token;
+}
+
+const refreshToken = async (refreshToken: string) => {
+    const refreshResponse = await fetch(`http://localhost:3001/spotify/refresh=?refreshToken=${refreshToken}`);
+    return await refreshResponse.json();
 }
 
 const getUsername = async (accessToken: string) => {
@@ -19,7 +25,6 @@ const getUsername = async (accessToken: string) => {
         }
       )
       const userData = await userResponse.json();
-      console.log(userData)
       return userData.display_name;
 }
 
@@ -37,4 +42,4 @@ const getDevices = async (accessToken: string) => {
   return await deviceResponse.json();
 }
 
-export default { getToken, getUsername, getDevices }
+export default { getNewToken,refreshToken, getUsername, getDevices }

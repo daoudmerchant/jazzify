@@ -1,9 +1,13 @@
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
+
+import { useAppDispatch } from "./app/hooks";
+import { initAccessToken } from "./features/user/userSlice";
 
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
@@ -35,10 +39,14 @@ const GlobalStyles = createGlobalStyle`
 
 const Main = styled.main`
   background: linear-gradient(138deg, #fcb4f5 0%, #fae6f7 20%, #e0faff 100%);
-  overflow: hidden;
 `
 
 function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    console.log("INITIALISING")
+    dispatch(initAccessToken(null));
+}, [])
   return (
     <>
       <GlobalStyles />
