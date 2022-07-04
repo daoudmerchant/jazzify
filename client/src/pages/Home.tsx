@@ -8,7 +8,7 @@ import Main from "./Main";
 const Home = () => {
     const { code, state, error } = Object.fromEntries(new URLSearchParams(window.location.search).entries());
     // @ts-ignore
-    const {token, status } = useAppSelector(selectUser);
+    const { token, status } = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

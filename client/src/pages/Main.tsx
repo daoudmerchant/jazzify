@@ -1,9 +1,11 @@
 import { useEffect, useState, createContext } from "react";
 import styled from "styled-components";
-import { useAppDispatch } from "../app/hooks";
-import Player from "../components/Player/Player";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectLiked } from "../features/player/playerSlice";
+
 import { setDeviceId } from "../features/player/playerSlice";
 
+import Player from "../components/Player/Player";
 import Selection from "../components/Selection/Selection";
 
 
@@ -30,6 +32,8 @@ export interface Artist {
 
 export interface Track {
     name: string
+    id: string
+    liked: boolean
     album: Album
     albumCover: string
     artists: Artist[]
@@ -43,17 +47,29 @@ const MainContainer = styled.div`
 
 const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
+    const liked = useAppSelector(selectLiked);
     const [player, setPlayer] = useState(null);
     const [paused, setPaused] = useState(false);
     const [track, setTrack] = useState<Track>({
         name: "",
+        id: '',
         album: {
             name: "",
             uri: ""
         },
         albumCover: "",
-        artists: [{ name: "", uri: "" }]
+        artists: [{ name: "", uri: "" }],
+        liked: false
     })
+
+    useEffect(() => {
+        if (liked.find((id: string) => id === track.id)) {
+            setTrack(prev => ({
+                ...prev,
+                liked: true
+            }))
+        }
+    }, [liked])
 
     useEffect(() => {
         if (!accessToken) {
@@ -88,14 +104,17 @@ const Main = ({ accessToken }: Props) => {
                     return;
                 }
                 const currentTrack = state.track_window.current_track;
+                console.log(currentTrack);
                 setTrack({
                     name: currentTrack.name,
+                    id: currentTrack.id,
                     album: {
                         name: currentTrack.album.name,
                         uri: currentTrack.album.uri,
                     },
                     albumCover: currentTrack.album.images[0].url,
-                    artists: currentTrack.artists
+                    artists: currentTrack.artists,
+                    liked: false
                 })
                 setPaused(state.paused);
                 // player.getCurrentState().then( state => { 

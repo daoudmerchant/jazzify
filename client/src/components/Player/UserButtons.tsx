@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppDispatch } from "../../app/hooks";
+import { toggleLiked } from "../../features/player/playerSlice"
 
 // icons
-import playlistIcon from "../../assets/playerIcons/playlist-rlkas-dzihab.png";
+import emptyHeartIcon from "../../assets/playerIcons/heart-empty-freepik.png";
+import fullHeartIcon from "../../assets/playerIcons/heart-full-freepik.png";
 import upIcon from "../../assets/playerIcons/up-roundicons.png";
 
 const UserButtonContainer = styled.div`
@@ -38,13 +41,19 @@ interface Props {
     toggleOpen: () => void,
     open: boolean
     ready: boolean
+    id: string
+    liked: boolean
 }
 
-const UserButtons = ({toggleOpen, open, ready}: Props) => {
+const UserButtons = ({toggleOpen, open, ready, id, liked}: Props) => {
+    const dispatch = useAppDispatch();
     return (
         <UserButtonContainer>
-            <Button disabled={!ready}>
-                <ButtonIcon src={playlistIcon} alt="add to playlist icon"/>
+            <Button disabled={!ready} onClick={() => dispatch(toggleLiked(id))}>
+                <ButtonIcon
+                    src={liked ? fullHeartIcon : emptyHeartIcon}
+                    alt={`${liked ? "add to" : "remove from"} playlist icon`}
+                />
             </Button>
             <Button onClick={toggleOpen} disabled={!ready}>
                 <OpenIcon src={upIcon} alt="show more icon" $open={open}/>

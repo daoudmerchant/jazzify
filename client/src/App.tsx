@@ -44,7 +44,6 @@ const Main = styled.main`
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("INITIALISING")
     dispatch(initAccessToken(null));
 }, [])
   return (

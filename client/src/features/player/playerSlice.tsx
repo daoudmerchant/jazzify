@@ -6,7 +6,8 @@ import { cancelOnLoading } from '../featureHelpers';
 export interface PlayerState {
   device_id: string,
   status: 'idle' | 'loading' | 'failed';
-  tracks: [string]
+  tracks: [string],
+  liked: [string];
 }
 
 export const playTracks = createAsyncThunk(
@@ -15,36 +16,27 @@ export const playTracks = createAsyncThunk(
   async (instruments: [string], { getState }) => {
     // @ts-ignore
     const { user, player } = getState();
-    await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
+    const tracks = await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
+    return tracks;
   },
   cancelOnLoading('player')
 )
 
-// TODO: Add backend
-
-// export const playMatchingSongs = createAsyncThunk(
-//   'player/playMatchingSongs',
-//   // @ts-ignore
-//   async (instruments: array, { getState }) => {
-//     // Search my database for matching URIs
-//     // Perform call to Spotify to start playing them
-//   },
-//   {
-//     condition: (_, { getState }) => {
-//       // @ts-ignore
-//       const { player: status } = getState()
-//       if (status === 'fulfilled' || status === 'loading') {
-//         // Already fetched or in progress, don't need to re-fetch
-//         return false
-//       }
-//     },
-//   }
-// )
-
+export const toggleLiked = createAsyncThunk(
+  'player/toggleLiked',
+  // @ts-ignore
+  async (id: string, { getState }) => {
+    // @ts-ignore
+    const { user } = getState();
+    const liked = await playerAPI.toggleLiked({ accessToken: user.token.access_token, id });
+    console.log(liked);
+    return id;
+  }
+)
 
 export const playerSlice = createSlice({
   name: 'player',
-  initialState: { device_id: null, status: "idle" },
+  initialState: { device_id: null, status: "idle", tracks: [], liked: [] },
   reducers: {
     setDeviceId: (state, action) => {
       state.device_id = action.payload
@@ -55,16 +47,25 @@ export const playerSlice = createSlice({
       .addCase(playTracks.pending, (state) => {
         state.status = "loading"
       })
-      .addCase(playTracks.fulfilled, (state) => {
+      .addCase(playTracks.fulfilled, (state, action) => {
         state.status = "idle"
+        state.tracks = action.payload;
       })
       .addCase(playTracks.rejected, (state) => {
+        state.status = "failed"
+      })
+      .addCase(toggleLiked.fulfilled, (state, action) => {
+        // @ts-ignore
+        state.liked.push(action.payload);
+      })
+      .addCase(toggleLiked.rejected, (state) => {
         state.status = "failed"
       });
   }
 })
 
 export const selectPlayer = (state: any) => state.player;
+export const selectLiked = (state: any) => state.player.liked;
 
 export const { setDeviceId } = playerSlice.actions;
 

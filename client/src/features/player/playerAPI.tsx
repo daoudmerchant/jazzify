@@ -1,3 +1,16 @@
+interface PostRequest {
+  accessToken: string
+}
+
+interface TrackQuery extends PostRequest {
+  deviceId: string,
+  instruments: [string]
+}
+
+interface LikeQuery extends PostRequest {
+  id: string
+}
+
 const getDevices = async (accessToken: string) => {
   const deviceResponse = await fetch(
     "https://api.spotify.com/v1/me/player/devices",
@@ -12,12 +25,21 @@ const getDevices = async (accessToken: string) => {
   return await deviceResponse.json();
 }
 
-const confirmPlaylist = async () => {
-  // query user endpoint to check if Jazzify playlist exists
-  // If not, create it
+const toggleLiked = async ({accessToken, id}: LikeQuery) => {
+  return await fetch(
+    `https://api.spotify.com/v1/me/tracks?ids=${id}`,
+    {
+      method: "PUT",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
+    }
+  );
 }
 
-const playTracks = async ({deviceId, accessToken, instruments}: {deviceId: string, accessToken: string, instruments: [string]}) => {
+const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
   let instrumentQuery = new URLSearchParams();
   instruments.forEach(instr => instrumentQuery.append('instruments', instr));
   const response = await fetch(`http://localhost:3001/api/tracks?${instrumentQuery.toString()}`);
@@ -40,4 +62,4 @@ const playTracks = async ({deviceId, accessToken, instruments}: {deviceId: strin
   return tracks;
 }
 
-export default { getDevices, playTracks }
+export default { getDevices, playTracks, toggleLiked }

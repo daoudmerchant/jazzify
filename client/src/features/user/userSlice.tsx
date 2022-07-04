@@ -29,8 +29,6 @@ export const getUserAccessToken = createAsyncThunk(
   'users/getAccessToken',
   async ({ code, state }: TokenQuery) => {
     const token = await userAPI.getNewToken({code, state});
-    console.log(token.access_token.slice(0, 4));
-
     const username = await userAPI.getUsername(token.access_token);
     const loginState = {
       username,
@@ -39,6 +37,7 @@ export const getUserAccessToken = createAsyncThunk(
         expires: new Date().getTime() + (token.expires_in * 1000)
       }
     };
+    console.log(loginState);
     window.localStorage.setItem('jazzify', JSON.stringify(loginState));
     return loginState;
   },
@@ -48,30 +47,24 @@ export const getUserAccessToken = createAsyncThunk(
 export const initAccessToken = createAsyncThunk(
   'users/initAccessToken',
   async () => {
-    console.log("INITIALISING")
     const priorStateString = window.localStorage.getItem('jazzify');
     if (!priorStateString) {
-      console.log("NO PRIOR TOKEN")
       return null;
     }
     const priorState = JSON.parse(priorStateString);
-    console.log(priorState)
-    const needsRefresh = new Date().getTime() - new Date(priorState.token.expires).getTime();
-    console.log(needsRefresh)
+    const needsRefresh = new Date().getTime() - priorState.token.expires;
     if (needsRefresh < 0) {
-      console.log("TOKEN STILL GOOD")
-      console.log(priorState.token.access_token.slice(0, 4));
       return priorState;
     }
-    console.log("NEED NEW TOKEN")
-    // const newToken = await userAPI.getNewToken(priorState.token.refresh_token);
-    // return {
-    //   ...priorState,
-    //   token: {
-    //     ...priorState.token,
-    //     ...newToken 
-    //   }
-    // }  
+    console.log("REFRESHING STATE")
+    const newToken = await userAPI.getNewToken(priorState.token.refresh_token);
+    return {
+      ...priorState,
+      token: {
+        ...priorState.token,
+        ...newToken 
+      }
+    }  
   },
   cancelOnLoading("user")
 )
@@ -96,7 +89,6 @@ export const userSlice = createSlice({
         .addCase(getUserAccessToken.fulfilled, (state, action) => {
           state.status = 'idle'
           const { token, username } = action.payload;
-          console.log(username)
           state.token = token;
           state.username = username;
         })
