@@ -9,8 +9,9 @@ const getNewToken = async ({ code, state }: TokenQuery) => {
 }
 
 const refreshToken = async (refreshToken: string) => {
-    const refreshResponse = await fetch(`http://localhost:3001/spotify/refresh=?refreshToken=${refreshToken}`);
-    return await refreshResponse.json();
+    const refreshResponse = await fetch(`http://localhost:3001/spotify/refresh?refreshToken=${refreshToken}`);
+    const token = await refreshResponse.json();
+    return token.access_token;
 }
 
 const getUsername = async (accessToken: string) => {

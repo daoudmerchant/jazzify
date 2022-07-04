@@ -8,3 +8,5 @@ export const cancelOnLoading = key => (  {
       }
     },
   })
+
+export const getExpiry = expiry => new Date().getTime() + (expiry * 1000)

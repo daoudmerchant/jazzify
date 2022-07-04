@@ -66,6 +66,10 @@ export const playerSlice = createSlice({
 
 export const selectPlayer = (state: any) => state.player;
 export const selectLiked = (state: any) => state.player.liked;
+export const selectArtists = (id: string) => (state: any) => {
+  const tracks = state.player.tracks;
+  return tracks.length ? tracks.find((track: any) => track.id === id).artists : [];
+}
 
 export const { setDeviceId } = playerSlice.actions;
 

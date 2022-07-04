@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import userAPI from './userAPI';
 
-import { cancelOnLoading } from "../featureHelpers";
+import { cancelOnLoading, getExpiry } from "../featureHelpers";
 
 interface Token {
   access_token: string,
@@ -34,10 +34,9 @@ export const getUserAccessToken = createAsyncThunk(
       username,
       token: {
         ...token,
-        expires: new Date().getTime() + (token.expires_in * 1000)
+        expires: getExpiry(token.expires_in)
       }
     };
-    console.log(loginState);
     window.localStorage.setItem('jazzify', JSON.stringify(loginState));
     return loginState;
   },
@@ -56,15 +55,16 @@ export const initAccessToken = createAsyncThunk(
     if (needsRefresh < 0) {
       return priorState;
     }
-    console.log("REFRESHING STATE")
-    const newToken = await userAPI.getNewToken(priorState.token.refresh_token);
-    return {
+    const newToken = await userAPI.refreshToken(priorState.token.refresh_token);
+    const newState = {
       ...priorState,
       token: {
-        ...priorState.token,
-        ...newToken 
+        ...newToken,
+        expires: getExpiry(newToken.expires_in)
       }
-    }  
+    }
+    window.localStorage.setItem('jazzify', JSON.stringify(newState));
+    return newState;
   },
   cancelOnLoading("user")
 )

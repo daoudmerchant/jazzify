@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppSelector } from "../../app/hooks";
+import { selectArtists } from "../../features/player/playerSlice";
 
 import { Track, Artist } from "../../pages/Main";
 

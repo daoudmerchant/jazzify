@@ -58,9 +58,10 @@ router.get('/callback', async (req, res) => {
 });
 
 router.get('/refresh', async (req, res) => {
+  const { refreshToken } = req.query;
   const formBody = new URLSearchParams();
   formBody.append('grant_type', 'refresh_token');
-  formBody.append('refresh_token'. req.query.refreshToken);
+  formBody.append('refresh_token', refreshToken);
   try {
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: "POST",
@@ -71,8 +72,9 @@ router.get('/refresh', async (req, res) => {
       }
     })
     const accessToken = await response.json();
-    res.json({access_token, accessToken});
+    res.json({access_token: accessToken});
   } catch(e) {
+    console.log(e)
     res.json({error: e.message});
   }
 });
