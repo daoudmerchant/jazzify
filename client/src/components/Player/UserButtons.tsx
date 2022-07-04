@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { useAppDispatch } from "../../app/hooks";
-import { toggleLiked } from "../../features/player/playerSlice"
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectLiked, toggleLiked } from "../../features/player/playerSlice"
+
+
 
 // icons
 import emptyHeartIcon from "../../assets/playerIcons/heart-empty-freepik.png";
 import fullHeartIcon from "../../assets/playerIcons/heart-full-freepik.png";
 import upIcon from "../../assets/playerIcons/up-roundicons.png";
+
+import { PlayStateContext } from "../../pages/Main";
 
 const UserButtonContainer = styled.div`
     display: flex;
@@ -42,17 +46,18 @@ interface Props {
     open: boolean
     ready: boolean
     id: string
-    liked: boolean
 }
 
-const UserButtons = ({toggleOpen, open, ready, id, liked}: Props) => {
+const UserButtons = ({toggleOpen, open, ready, id}: Props) => {
     const dispatch = useAppDispatch();
+    const liked = useAppSelector(selectLiked);
+    const isLiked = liked.find((likedId: string) => likedId === id);
     return (
         <UserButtonContainer>
             <Button disabled={!ready} onClick={() => dispatch(toggleLiked(id))}>
                 <ButtonIcon
-                    src={liked ? fullHeartIcon : emptyHeartIcon}
-                    alt={`${liked ? "add to" : "remove from"} playlist icon`}
+                    src={isLiked ? fullHeartIcon : emptyHeartIcon}
+                    alt={`${isLiked ? "add to" : "remove from"} playlist icon`}
                 />
             </Button>
             <Button onClick={toggleOpen} disabled={!ready}>

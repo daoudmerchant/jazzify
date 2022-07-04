@@ -33,7 +33,6 @@ export interface Artist {
 export interface Track {
     name: string
     id: string
-    liked: boolean
     album: Album
     albumCover: string
     artists: Artist[]
@@ -47,7 +46,6 @@ const MainContainer = styled.div`
 
 const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
-    const liked = useAppSelector(selectLiked);
     const [player, setPlayer] = useState(null);
     const [paused, setPaused] = useState(false);
     const [track, setTrack] = useState<Track>({
@@ -58,18 +56,8 @@ const Main = ({ accessToken }: Props) => {
             uri: ""
         },
         albumCover: "",
-        artists: [{ name: "", uri: "" }],
-        liked: false
+        artists: [{ name: "", uri: "" }]
     })
-
-    useEffect(() => {
-        if (liked.find((id: string) => id === track.id)) {
-            setTrack(prev => ({
-                ...prev,
-                liked: true
-            }))
-        }
-    }, [liked])
 
     useEffect(() => {
         if (!accessToken) {
@@ -104,7 +92,6 @@ const Main = ({ accessToken }: Props) => {
                     return;
                 }
                 const currentTrack = state.track_window.current_track;
-                console.log(currentTrack);
                 setTrack({
                     name: currentTrack.name,
                     id: currentTrack.id,
@@ -113,8 +100,7 @@ const Main = ({ accessToken }: Props) => {
                         uri: currentTrack.album.uri,
                     },
                     albumCover: currentTrack.album.images[0].url,
-                    artists: currentTrack.artists,
-                    liked: false
+                    artists: currentTrack.artists
                 })
                 setPaused(state.paused);
                 // player.getCurrentState().then( state => { 
@@ -130,7 +116,7 @@ const Main = ({ accessToken }: Props) => {
             {/*
             // @ts-ignore */}
             <PlayStateContext.Provider value={{ paused, player }}>
-                <Player track={track} player={player} />
+                <Player track={track} />
             </PlayStateContext.Provider>
         </MainContainer>
     )

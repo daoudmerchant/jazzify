@@ -13,8 +13,7 @@ import UserButtons from "./UserButtons";
 import ArtistList from "./ArtistList";
 
 interface Props {
-    track: Track,
-    player: any
+    track: Track
 }
 
 const PlayerContainer = styled.section`
@@ -70,8 +69,6 @@ const AlbumCover = styled.img`
     box-shadow: -5px 5px 7px -3px #000;
 `
 
-
-
 const Player = ({ track }: Props) => {
     const [{open, first, second}, setOpen] = useStaggered(350)
     const ready = Boolean(track.name.length)
@@ -87,7 +84,7 @@ const Player = ({ track }: Props) => {
                 <ArtistList open={second} />
                 <PlayerFlexContainer $above={true}>
                     <Controls open={second} />
-                    <UserButtons ready={ready} id={track.id} liked={track.liked} toggleOpen={() => setOpen(prev => !prev)} open={open} />
+                    <UserButtons ready={ready} id={track.id} toggleOpen={() => setOpen(prev => !prev)} open={open} />
                 </PlayerFlexContainer>
             </PlayerSheen>
         </PlayerContainer>
