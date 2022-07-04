@@ -25,12 +25,13 @@ export const playTracks = createAsyncThunk(
 export const toggleLiked = createAsyncThunk(
   'player/toggleLiked',
   // @ts-ignore
-  async (id: string, { getState }) => {
+  async ({id, isLiked}: {id: string, isLiked: boolean}, { getState }) => {
     // @ts-ignore
-    const { user } = getState();
-    const liked = await playerAPI.toggleLiked({ accessToken: user.token.access_token, id });
-    console.log(liked);
-    return id;
+    const { user, player } = getState();
+    const liked = await playerAPI.toggleLiked({ accessToken: user.token.access_token, id, isLiked });
+    return isLiked
+      ? player.liked.filter((likedId: string) => likedId !== id)
+      : [id, ...player.liked]
   }
 )
 
@@ -55,8 +56,7 @@ export const playerSlice = createSlice({
         state.status = "failed"
       })
       .addCase(toggleLiked.fulfilled, (state, action) => {
-        // @ts-ignore
-        state.liked.push(action.payload);
+        state.liked = action.payload;
       })
       .addCase(toggleLiked.rejected, (state) => {
         state.status = "failed"

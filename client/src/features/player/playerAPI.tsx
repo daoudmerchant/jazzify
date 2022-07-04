@@ -9,6 +9,7 @@ interface TrackQuery extends PostRequest {
 
 interface LikeQuery extends PostRequest {
   id: string
+  isLiked: boolean
 }
 
 const getDevices = async (accessToken: string) => {
@@ -25,11 +26,12 @@ const getDevices = async (accessToken: string) => {
   return await deviceResponse.json();
 }
 
-const toggleLiked = async ({accessToken, id}: LikeQuery) => {
-  return await fetch(
+const toggleLiked = async ({accessToken, id, isLiked}: LikeQuery) => {
+  const method = isLiked ? "DELETE" : "PUT";
+   await fetch(
     `https://api.spotify.com/v1/me/tracks?ids=${id}`,
     {
-      method: "PUT",
+      method,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
