@@ -3,6 +3,22 @@ import playerAPI from './playerAPI';
 
 import { cancelOnLoading } from '../featureHelpers';
 
+import { Track } from '../../pages/Main';
+import { ObjectId } from 'mongodb';
+
+export interface ArtistFromDB {
+  name: string,
+  instrument: string,
+  _id: ObjectId
+}
+
+export interface TrackFromDB {
+  _id: ObjectId
+  uri: string,
+  instruments: [string],
+  artists: [ArtistFromDB]
+}
+
 export interface PlayerState {
   device_id: string,
   status: 'idle' | 'loading' | 'failed';
@@ -17,6 +33,7 @@ export const playTracks = createAsyncThunk(
     // @ts-ignore
     const { user, player } = getState();
     const tracks = await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
+    console.log(tracks);
     return tracks;
   },
   cancelOnLoading('player')
@@ -50,6 +67,7 @@ export const playerSlice = createSlice({
       })
       .addCase(playTracks.fulfilled, (state, action) => {
         state.status = "idle"
+        console.log(action.payload)
         state.tracks = action.payload;
       })
       .addCase(playTracks.rejected, (state) => {
@@ -66,10 +84,7 @@ export const playerSlice = createSlice({
 
 export const selectPlayer = (state: any) => state.player;
 export const selectLiked = (state: any) => state.player.liked;
-export const selectArtists = (id: string) => (state: any) => {
-  const tracks = state.player.tracks;
-  return tracks.length ? tracks.find((track: any) => track.id === id).artists : [];
-}
+export const selectTracks = (state: any) => state.player.tracks;
 
 export const { setDeviceId } = playerSlice.actions;
 

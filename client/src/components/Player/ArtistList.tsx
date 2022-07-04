@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { useAppSelector } from "../../app/hooks";
-import { selectArtists } from "../../features/player/playerSlice";
+import { selectTracks } from "../../features/player/playerSlice";
+
+import { TrackFromDB, ArtistFromDB } from "../../features/player/playerSlice";
+
+import ArtistCard from "./ArtistCard";
 
 const ArtistContainer = styled.div`
     background-color: aliceblue;
@@ -17,10 +21,11 @@ interface Props {
 }
 
 const ArtistList = ({open, id}: Props) => {
-    const artists = useAppSelector(selectArtists(id))
+    const tracks = useAppSelector(selectTracks)
+    const currentArtists = tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
     return (
         <ArtistContainer $open={open}>
-            {artists}
+            {currentArtists.map((artist: ArtistFromDB) => <ArtistCard key={artist._id.toString()} artist={artist}/>)}
         </ArtistContainer>
     )
 }

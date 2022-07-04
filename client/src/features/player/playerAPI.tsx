@@ -46,9 +46,8 @@ const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
   instruments.forEach(instr => instrumentQuery.append('instruments', instr));
   const response = await fetch(`http://localhost:3001/api/tracks?${instrumentQuery.toString()}`);
   const tracks = await response.json();
-  console.log(tracks);
   const uris = tracks.map(({uri}: {uri: string}) => `spotify:track:${uri}`);
-  const result = await fetch(
+  await fetch(
     `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
     {
       method: "PUT",
@@ -61,8 +60,8 @@ const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
         uris
       })
     }
-  );
-  console.log(await result.json())
+    );
+  console.log(tracks);
   return tracks;
 }
 

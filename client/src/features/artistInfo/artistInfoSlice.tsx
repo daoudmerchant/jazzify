@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import artistInfoAPI from './artistInfoAPI';
 
 import { cancelOnLoading } from '../featureHelpers';
+
 interface Artist {
     bio: string
 }
@@ -21,7 +22,6 @@ export const getArtistBio = createAsyncThunk(
   async (artistId: string, { getState }) => {
     // @ts-ignore
     const { artistInfo: artists } = getState()
-    // @ts-ignore
     const hasBio = Boolean(artists[artistId]);
     if (hasBio) {
         return artists;
@@ -57,8 +57,6 @@ export const artistInfoSlice = createSlice({
       });
   }
 })
-
-export const selectArtist = (id: string) => (state: any) => state.artistInfo.artists[id];
 
 // export const { setDeviceId } = playerSlice.actions;
 
