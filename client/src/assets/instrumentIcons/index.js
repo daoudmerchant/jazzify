@@ -11,7 +11,7 @@ import vibraphone from "./vibraphone-freepik.png";
 
 export default [
     {
-        name: "saxphone",
+        name: "saxophone",
         url: saxophone
     },
     {

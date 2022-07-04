@@ -7,10 +7,10 @@ import { TrackFromDB, ArtistFromDB } from "../../features/player/playerSlice";
 import ArtistCard from "./ArtistCard";
 
 const ArtistContainer = styled.div`
-    background-color: aliceblue;
     height: calc(100vh - 300px);
+    overflow-y: scroll;
     position: relative;
-    top: 150px;
+    top: calc(150px + 1.5em);
     transition: .3s all;
     opacity: ${(props: {$open: boolean}) => props.$open ? "1" : "0"};
 `
@@ -25,7 +25,7 @@ const ArtistList = ({open, id}: Props) => {
     const currentArtists = tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
     return (
         <ArtistContainer $open={open}>
-            {currentArtists.map((artist: ArtistFromDB) => <ArtistCard key={artist._id.toString()} artist={artist}/>)}
+            {currentArtists.map((artist: ArtistFromDB) => <ArtistCard open={open} key={artist._id.toString()} artist={artist}/>)}
         </ArtistContainer>
     )
 }
