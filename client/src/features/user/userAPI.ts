@@ -29,7 +29,7 @@ const getUsername = async (accessToken: string) => {
       console.log(userData);
       return {
         username: userData.display_name,
-        image: userData.images[0] || null
+        img: userData.images[0]?.url || null
       };
 }
 

@@ -42,6 +42,8 @@ const MyLink = styled(NavLink)`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
     &.active {
         background-color: black;
         opacity: .5;
@@ -66,7 +68,7 @@ const Login = styled(MyLink)`
 `
 
 const UserIcon = styled.img`
-    height: 20px;
+    height: 100%;
 `
 
 const UserInitial = styled.p`
@@ -77,7 +79,6 @@ const UserInitial = styled.p`
 const Nav = () => {
     // @ts-ignore
     const user = useAppSelector(selectSpotifyUser);
-    console.log(user);
     return (
         <Header>
             <NavElem>
@@ -86,10 +87,11 @@ const Nav = () => {
                 { !user
                     ? <Login to="login" />
                     : <MyLink to="/settings">
-                        {user.img
+                        {/* {user.img
                             ? <UserIcon src={user.img} alt={user.username}/>
                             : <UserInitial>{user.username.charAt(0).toUpperCase()}</UserInitial>
-                        }
+                        } // TODO: Fix user image icon */}
+                        <UserInitial>{user.username.charAt(0).toUpperCase()}</UserInitial>
                     </MyLink>
                 }
             </NavElem>
