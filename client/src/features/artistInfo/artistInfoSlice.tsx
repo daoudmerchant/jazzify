@@ -19,19 +19,19 @@ interface ArtistInfoState {
 export const getArtistBio = createAsyncThunk(
   'artistInfo/getArtistBio',
   // @ts-ignore
-  async (artistId: string, { getState }) => {
+  async (name: string, { getState }) => {
     // @ts-ignore
-    const { artistInfo: artists } = getState()
-    const hasBio = Boolean(artists[artistId]);
+    const { artistInfo } = getState()
+    const artists = artistInfo.artists;
+    const hasBio = Boolean(artists[name]);
     if (hasBio) {
-        return artists;
+        return artistInfo;
     }
-    const bio = artistInfoAPI.getBio(artistId);
+    console.log("GETTING")
+    const bio = await artistInfoAPI.getBio(name);
     return {
         ...artists,
-        [artistId]: {
-            bio
-        }
+        [name]: bio
     }
   },
   cancelOnLoading('artistInfo')
@@ -57,6 +57,8 @@ export const artistInfoSlice = createSlice({
       });
   }
 })
+
+export const selectArtistInfo = (state: any) => state.artistInfo.artists;
 
 // export const { setDeviceId } = playerSlice.actions;
 

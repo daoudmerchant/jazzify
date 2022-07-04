@@ -7,7 +7,7 @@ import { TrackFromDB, ArtistFromDB } from "../../features/player/playerSlice";
 import ArtistCard from "./ArtistCard";
 
 const ArtistContainer = styled.div`
-    height: calc(100vh - 300px);
+    height: calc(100vh - 320px);
     overflow-y: scroll;
     position: relative;
     top: calc(150px + 1.5em);

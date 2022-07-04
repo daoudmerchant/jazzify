@@ -70,7 +70,7 @@ const AlbumCover = styled.img`
 `
 
 const Player = ({ track }: Props) => {
-    const [{open, first, second}, setOpen] = useStaggered(350)
+    const [{control, first, second}, setOpen] = useStaggered(350)
     const ready = Boolean(track.name.length)
     return (
         <PlayerContainer $open={first}>
@@ -84,7 +84,7 @@ const Player = ({ track }: Props) => {
                 <ArtistList open={second} id={track.id} />
                 <PlayerFlexContainer $above={true}>
                     <Controls open={second} />
-                    <UserButtons ready={ready} id={track.id} toggleOpen={() => setOpen(prev => !prev)} open={open} />
+                    <UserButtons ready={ready} id={track.id} toggleOpen={() => setOpen(prev => !prev)} open={control} />
                 </PlayerFlexContainer>
             </PlayerSheen>
         </PlayerContainer>

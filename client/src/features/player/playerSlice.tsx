@@ -3,7 +3,6 @@ import playerAPI from './playerAPI';
 
 import { cancelOnLoading } from '../featureHelpers';
 
-import { Track } from '../../pages/Main';
 import { ObjectId } from 'mongodb';
 
 export interface ArtistFromDB {

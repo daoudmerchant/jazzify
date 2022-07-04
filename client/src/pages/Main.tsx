@@ -1,7 +1,6 @@
 import { useEffect, useState, createContext } from "react";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { selectLiked } from "../features/player/playerSlice";
+import { useAppDispatch } from "../app/hooks";
 
 import { setDeviceId } from "../features/player/playerSlice";
 
@@ -103,9 +102,6 @@ const Main = ({ accessToken }: Props) => {
                     artists: currentTrack.artists
                 })
                 setPaused(state.paused);
-                // player.getCurrentState().then( state => { 
-                //     (!state)? setActive(false) : setActive(true) 
-                // }),
             });
             player.connect();
         }

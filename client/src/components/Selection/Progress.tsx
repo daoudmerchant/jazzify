@@ -62,13 +62,13 @@ const Progress = ({ count }: Props) => {
     useEffect(() => {
         switch (count) {
             case 0:
-                if (right.open) {
+                if (right.control) {
                     setRightExpanded(false);
                     setTimeout(() => setMiddleExpanded(false), 190);
                     setTimeout(() => setLeftExpanded(false), 380);
                     return;
                 }
-                if (middle.open) {
+                if (middle.control) {
                     setMiddleExpanded(false);
                     setTimeout(() => setLeftExpanded(false), 190);
                     return;

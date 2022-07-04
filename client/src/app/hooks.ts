@@ -24,7 +24,7 @@ export const useList = (max: number) => {
 }
 
 interface Staggered {
-    open: boolean
+    control: boolean
     first: boolean,
     second: boolean
 }
@@ -43,7 +43,7 @@ export const useStaggered = (ms: number): [Staggered, React.Dispatch<React.SetSt
         setTimeout(() => setFirstOpen(false), ms)
     })
     return [
-        { open, first: firstOpen, second: secondOpen },
+        { control: open, first: firstOpen, second: secondOpen },
         setOpen
     ]
 }
