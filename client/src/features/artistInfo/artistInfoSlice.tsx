@@ -27,7 +27,6 @@ export const getArtistBio = createAsyncThunk(
     if (hasBio) {
         return artistInfo;
     }
-    console.log("GETTING")
     const bio = await artistInfoAPI.getBio(name);
     return {
         ...artists,
@@ -59,7 +58,5 @@ export const artistInfoSlice = createSlice({
 })
 
 export const selectArtistInfo = (state: any) => state.artistInfo.artists;
-
-// export const { setDeviceId } = playerSlice.actions;
 
 export default artistInfoSlice.reducer;

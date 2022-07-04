@@ -26,7 +26,11 @@ const getUsername = async (accessToken: string) => {
         }
       )
       const userData = await userResponse.json();
-      return userData.display_name;
+      console.log(userData);
+      return {
+        username: userData.display_name,
+        image: userData.images[0] || null
+      };
 }
 
 const getDevices = async (accessToken: string) => {

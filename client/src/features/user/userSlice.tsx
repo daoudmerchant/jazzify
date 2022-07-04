@@ -11,9 +11,14 @@ interface Token {
   refresh_token: string
 }
 
+interface SpotifyUser {
+  username: string
+  img: string | null
+}
+
 export interface UserState {
   token: Token | null,
-  username: string | null,
+  spotifyUser: SpotifyUser | null,
   deviceId: string | null
   status: 'idle' | 'loading' | 'failed';
 }
@@ -23,15 +28,15 @@ export interface TokenQuery {
   state: string
 }
 
-const defaultState = { token: null, username: null, deviceId: null, status: 'idle'}
+const defaultState = { token: null, spotifyUser: null, deviceId: null, status: 'idle'}
 
 export const getUserAccessToken = createAsyncThunk(
   'users/getAccessToken',
   async ({ code, state }: TokenQuery) => {
     const token = await userAPI.getNewToken({code, state});
-    const username = await userAPI.getUsername(token.access_token);
+    const spotifyUser = await userAPI.getUsername(token.access_token);
     const loginState = {
-      username,
+      spotifyUser,
       token: {
         ...token,
         expires: getExpiry(token.expires_in)
@@ -88,9 +93,10 @@ export const userSlice = createSlice({
         })
         .addCase(getUserAccessToken.fulfilled, (state, action) => {
           state.status = 'idle'
-          const { token, username } = action.payload;
+          const { token, spotifyUser } = action.payload;
           state.token = token;
-          state.username = username;
+          // @ts-ignore
+          state.spotifyUser = spotifyUser;
         })
         .addCase(getUserAccessToken.rejected, (state) => {
             state.status = 'failed';
@@ -103,8 +109,8 @@ export const userSlice = createSlice({
           if (!action.payload) {
             return;
           }
-          const { username, token } = action.payload;
-          state.username = username;
+          const { spotifyUser, token } = action.payload;
+          state.spotifyUser = spotifyUser;
           state.token = token;
         })
         .addCase(initAccessToken.rejected, (state) => {
@@ -115,6 +121,7 @@ export const userSlice = createSlice({
 
   export const selectUser = (state: { user: UserState, player: any }) => state.user;
   export const selectToken = (state: { user: UserState, player: any }) => state.user.token?.access_token
+  export const selectSpotifyUser = (state: { user: UserState, player: any }) => state.user.spotifyUser
 
   export const { signOut } = userSlice.actions;
   
