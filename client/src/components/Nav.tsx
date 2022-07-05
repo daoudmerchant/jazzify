@@ -1,10 +1,12 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
+// redux
 import { useAppSelector } from "../app/hooks";
 import { selectSpotifyUser } from "../features/user/userSlice";
 import { NavLink } from "react-router-dom"
 
+// icons
 import spotifyEmptyIcon from "../assets/otherIcons/spotify-empty-freepik.png";
 import spotifyFullIcon from "../assets/otherIcons/spotify-full-freepik.png";
 
@@ -22,24 +24,24 @@ const NavElem = styled.nav`
 `
 
 const Logo = styled(NavLink)`
+    height: 75%;
+    margin-right: auto;
+    padding-inline: 10px;
     font-family: 'Monoton', cursive;
     font-size: 35px;
-    margin-right: auto;
-    height: 75%;
-    padding-inline: 10px;
     color: black;
 `
 
 const LinkStyle = css`
-    border: 3px solid black;
+    position: relative;
     height: 70%;
     margin-inline: 5px;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    aspect-ratio: 1 / 1;
+    border: 3px solid black;
+    border-radius: 50%;
     overflow: hidden;
     &.active {
         background-color: black;
@@ -54,8 +56,8 @@ const MyLink = styled(NavLink)`
 
 const SignIn = styled.a`
     ${LinkStyle}
-    border: 0;
     padding: 0;
+    border: 0;
     background-size: contain;
     background-image: url(${spotifyEmptyIcon});
     &.active {
@@ -71,13 +73,12 @@ const About = styled(MyLink)`
 
 const UserIcon = styled.img`
     position: absolute;
+    right: 17px;
+    top: 13px;
     z-index: 100;
-    height: 100%;
     height: 45px;
     width: 45px;
     border-radius: 50%;
-    right: 17px;
-    top: 13px;
     object-fit: cover;
     pointer-events: none;
 `

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 
 import SearchForm from "./SearchForm";
@@ -17,11 +16,11 @@ const SelectionContainer = styled.section`
 
 const ButtonContainer = styled.div`
     width: 100%;
+    padding-inline: 10px;
+    padding-top: 10px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    padding-inline: 10px;
-    padding-top: 10px;
 `
 
 const InstrumentIcon = styled.img`

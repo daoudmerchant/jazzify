@@ -10,14 +10,14 @@ const WelcomeContainer = styled.div`
 
 const WelcomeCard = styled.div`
     height: 100%;
+    padding-inline: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-style: solid;
     border-width: 4px;
     border-color: white white #5C33F6 #5C33F6;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-inline: 40px;
 `
 
 const Logo = styled.h1`

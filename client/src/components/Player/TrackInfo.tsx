@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import { Track, Artist } from "../../features/player/playerSlice";
 
-
 interface Props {
     track: Track
     open: boolean

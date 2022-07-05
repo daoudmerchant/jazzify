@@ -1,24 +1,27 @@
 import styled, {css} from "styled-components"
 
-import { useAppDispatch } from "../app/hooks";
+// redux
+import { useAppDispatch } from "../app/hooks";
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "../features/user/userSlice";
 
+// icons
 import spotifyFull from "../assets/otherIcons/spotify-full-freepik.png";
 
 const Action = css`
-    background-color: white;
-    font-weight: bold;
     margin-top: auto;
     margin-bottom: 3em;
-    padding: 1em 1.5em;
+    padding: .5em 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5em;
+    font-weight: bold;
     border-radius: 1.5em;
     border-style: solid;
     border-width: 4px;
     border-color: #5C33F6 #5C33F6 white white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background-color: white;
 `
 
 const SignIn = styled.a`
@@ -42,16 +45,16 @@ const SpotifyLink = ({loggedIn}: Props) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     if (loggedIn) {
-    return (
-        <SignOut onClick={() => {
-            // @ts-ignore
-            dispatch(signOut())
-            navigate('/')
-        }}>
-            Sign out
-            <Icon src={spotifyFull} alt="spotify logo"/>
-        </SignOut>
-    )
+        return (
+            <SignOut onClick={() => {
+                // @ts-ignore
+                dispatch(signOut())
+                navigate('/')
+            }}>
+                Sign out
+                <Icon src={spotifyFull} alt="spotify logo"/>
+            </SignOut>
+        )
     };
     return (
         <SignIn href="http://localhost:3001/spotify/login">

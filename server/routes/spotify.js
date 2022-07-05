@@ -3,20 +3,19 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 
 const scopes = [
-  "user-read-email",
-  "playlist-read-private",
-  "playlist-read-collaborative",
+  // "user-read-email",
+  // "playlist-read-private",
+  // "playlist-read-collaborative",
   "streaming",
-  "user-read-private",
+  // "user-read-private",
   "user-library-read",
-  "user-top-read",
   "user-library-modify",
+  // "user-top-read",
   "user-read-playback-state",
   "user-modify-playback-state",
   "user-read-currently-playing",
-  "user-read-recently-played",
-  "user-read-playback-state",
-  "user-follow-read",
+  // "user-read-recently-played",
+  // "user-follow-read",
 ]
 
 const router = express.Router();
@@ -53,6 +52,7 @@ router.get('/callback', async (req, res) => {
     const token = await response.json();
     res.json(token)
   } catch(e) {
+    console.log(e);
     res.json({error: e.message})
   }
 });

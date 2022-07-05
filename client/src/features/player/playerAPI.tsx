@@ -12,19 +12,19 @@ interface LikeQuery extends PostRequest {
   isLiked: boolean
 }
 
-const getDevices = async (accessToken: string) => {
-  const deviceResponse = await fetch(
-    "https://api.spotify.com/v1/me/player/devices",
-    {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + accessToken
-      }
-    }
-  )
-  return await deviceResponse.json();
-}
+// const getDevices = async (accessToken: string) => {
+//   const deviceResponse = await fetch(
+//     "https://api.spotify.com/v1/me/player/devices",
+//     {
+//       headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json',
+//         'Authorization': 'Bearer ' + accessToken
+//       }
+//     }
+//   )
+//   return await deviceResponse.json();
+// }
 
 const toggleLiked = async ({accessToken, id, isLiked}: LikeQuery) => {
   const method = isLiked ? "DELETE" : "PUT";
@@ -64,4 +64,4 @@ const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
   return tracks;
 }
 
-export default { getDevices, playTracks, toggleLiked }
+export default { playTracks, toggleLiked }

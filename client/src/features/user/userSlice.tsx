@@ -75,56 +75,54 @@ export const initAccessToken = createAsyncThunk(
 )
 
 export const userSlice = createSlice({
-    name: 'user',
-    initialState: defaultState,
-    reducers: {
-      signOut: () => {
-        window.localStorage.removeItem('jazzify');
-        return defaultState;
-      },
-      setDeviceId: (state, action) => {
-        state.deviceId = action.payload
-      },
+  name: 'user',
+  initialState: defaultState,
+  reducers: {
+    signOut: () => {
+      window.localStorage.removeItem('jazzify');
+      return defaultState;
     },
-    extraReducers: (builder) => {
-      builder
-        .addCase(getUserAccessToken.pending, (state) => {
-          state.status = 'loading'
-        })
-        .addCase(getUserAccessToken.fulfilled, (state, action) => {
-          state.status = 'idle'
-          const { token, spotifyUser } = action.payload;
-          state.token = token;
-          // @ts-ignore
-          state.spotifyUser = spotifyUser;
-        })
-        .addCase(getUserAccessToken.rejected, (state) => {
-            state.status = 'failed';
-        })
-        .addCase(initAccessToken.pending, (state) => {
-          state.status = 'loading'
-        })
-        .addCase(initAccessToken.fulfilled, (state, action) => {
-          state.status = 'idle';
-          if (!action.payload) {
-            return;
-          }
-          const { spotifyUser, token } = action.payload;
-          state.spotifyUser = spotifyUser;
-          state.token = token;
-        })
-        .addCase(initAccessToken.rejected, (state) => {
+    setDeviceId: (state, action) => {
+      state.deviceId = action.payload
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserAccessToken.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(getUserAccessToken.fulfilled, (state, action) => {
+        state.status = 'idle'
+        const { token, spotifyUser } = action.payload;
+        state.token = token;
+        // @ts-ignore
+        state.spotifyUser = spotifyUser;
+      })
+      .addCase(getUserAccessToken.rejected, (state) => {
           state.status = 'failed';
-      });
-    }
-  })
+      })
+      .addCase(initAccessToken.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(initAccessToken.fulfilled, (state, action) => {
+        state.status = 'idle';
+        if (!action.payload) {
+          return;
+        }
+        const { spotifyUser, token } = action.payload;
+        state.spotifyUser = spotifyUser;
+        state.token = token;
+      })
+      .addCase(initAccessToken.rejected, (state) => {
+        state.status = 'failed';
+    });
+  }
+})
 
-  export const selectUser = (state: { user: UserState, player: any }) => state.user;
-  export const selectToken = (state: { user: UserState, player: any }) => state.user.token?.access_token
-  export const selectSpotifyUser = (state: { user: UserState, player: any }) => state.user.spotifyUser
+export const selectUser = (state: { user: UserState, player: any }) => state.user;
+export const selectToken = (state: { user: UserState, player: any }) => state.user.token?.access_token
+export const selectSpotifyUser = (state: { user: UserState, player: any }) => state.user.spotifyUser
 
-  export const { signOut } = userSlice.actions;
-  
-  export default userSlice.reducer;
+export const { signOut } = userSlice.actions;
 
-// https://github.com/reduxjs/cra-template-redux-typescript/blob/master/template/src/features/counter/counterSlice.ts
+export default userSlice.reducer;

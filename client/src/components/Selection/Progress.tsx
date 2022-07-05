@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { useStaggered } from "../../app/hooks";
@@ -16,17 +16,17 @@ const Container = styled.div`
 `
 
 const Circle = styled.div`
-    transition: .2s linear all;
-    border: 2vw solid ${(props: { $active: boolean }) => props.$active ? "#59dbff" : "white"};
-    border-radius: 50%;
     height: 12vw;
     width: 12vw;
     padding: 1.2vw;
+    transition: .2s linear all;
+    border: 2vw solid ${(props: { $active: boolean }) => props.$active ? "#59dbff" : "white"};
+    border-radius: 50%;
     transform: scale(${(props: { $active: boolean }) => props.$active ? "1.2" : "1"});
     & > * {
-        width: 100%;
-        height: 100%;
         display: block;
+        height: 100%;
+        width: 100%;
         object-fit: contain;
         transition: .25s linear all;
         filter: ${(props: { $active: boolean }) => props.$active
@@ -44,8 +44,8 @@ const EmptyLine = styled.div`
 
 const FilledLine = styled.div`
     height: 1.4vw;
-    transition: .2s linear all;
     width: ${(props: { $active: boolean }) => props.$active ? "14vw" : "0"};
+    transition: .2s linear all;
     background-color: #59dbff;
 `
 

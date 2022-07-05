@@ -5,7 +5,6 @@ import { cancelOnLoading } from '../featureHelpers';
 
 import { ObjectId } from 'mongodb';
 
-
 export interface Album {
   name: string
   uri: string
@@ -115,9 +114,11 @@ export const playerSlice = createSlice({
 })
 
 export const selectPlayer = (state: any) => state.player;
-export const selectLiked = (state: any) => state.player.liked;
+export const selectLiked = (id: string) => (state: any) => 
+  state.player.liked.find((likedId: string) => likedId === id);
 export const selectCurrentTrack = (state: any) => state.player.currentTrack;
-export const selectArtists = (id: string) => (state: any) => state.player.tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
+export const selectArtists = (id: string) => (state: any) =>
+  state.player.tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
 
 export const { setDeviceId, setCurrentlyPlaying } = playerSlice.actions;
 

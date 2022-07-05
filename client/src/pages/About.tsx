@@ -6,7 +6,7 @@ import aboutCopy from "../faqCopy"
 
 const AboutContainer = styled.div`
     width: 100%;
-    padding: 10px 40px 20px;
+    padding: 10px 40px 40px;
     color: #5C33F6;
 `
 

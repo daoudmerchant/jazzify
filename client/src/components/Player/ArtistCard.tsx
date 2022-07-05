@@ -12,7 +12,7 @@ import { selectArtistInfo, getArtistBio } from "../../features/artistInfo/artist
 import { ArtistFromDB } from "../../features/player/playerSlice"
 
 // icons
-import instrumentIcons from "../../assets/instrumentIcons"
+import instrumentIcons from "../../assets/instrumentIcons";
 import upIcon from "../../assets/playerIcons/up-roundicons.png";
 
 const Card = styled.div`
@@ -58,7 +58,8 @@ interface BiographyStyleProps {
 
 const Biography = styled.div`
     padding-top: 1em;
-    font-size: ${(props: BiographyStyleProps) => props.$open ? ".8em" : "0"};
+    font-size: ${(props: BiographyStyleProps) => props.$open ? ".9em" : "0"};
+    line-height: 1.5em;
     transition: .4s all;
     opacity: ${(props: BiographyStyleProps) => props.$visible ? "1" : "0"};
 `

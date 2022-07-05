@@ -9,8 +9,6 @@ import { setDeviceId, setCurrentlyPlaying } from "../features/player/playerSlice
 import Player from "../components/Player/Player";
 import Selection from "../components/Selection/Selection";
 
-import { Track } from "../features/player/playerSlice";
-
 export interface PlayerState {
     paused: boolean,
     player: any,
@@ -30,9 +28,9 @@ const MainContainer = styled.div`
 
 const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
+    const track = useAppSelector(selectCurrentTrack)
     const [player, setPlayer] = useState(null);
     const [paused, setPaused] = useState(false);
-    const track = useAppSelector(selectCurrentTrack)
     useEffect(() => {
         if (!accessToken || player) {
             return;

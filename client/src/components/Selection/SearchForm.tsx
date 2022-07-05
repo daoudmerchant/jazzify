@@ -14,22 +14,22 @@ interface Props {
 }
 
 const Form = styled.form`
-    width: 100%;
     position: relative;
+    width: 100%;
     padding-inline: 20px;
     padding-bottom: 20px;
 `
 
 const Submit = styled.button`
-    transition: .2s all;
     height: 60px;
-    border-radius: 30px;
-    margin-top: 20px;
     width: 100%;
+    margin-top: 20px;
     font-size: 20px;
     color: ${(props: { $color: string, disabled: boolean } ) => props.disabled ? props.$color : "white"};
-    border: 3px solid ${(props: { $color: string, disabled: boolean } ) => props.disabled ? props.$color : "white"};
     font-weight: bold;
+    border: 3px solid ${(props: { $color: string, disabled: boolean } ) => props.disabled ? props.$color : "white"};
+    border-radius: 30px;
+    transition: .2s all;
     box-shadow: ${(props: { $color: string, disabled: boolean } ) => props.disabled ? "none" : "-5px 3px 12px -3px lightgrey"};
     background-color: ${(props: { $color: string, disabled: boolean }) => props.disabled ? "transparent" : props.$color};
 `
@@ -56,22 +56,22 @@ const SearchForm = ({ children, list, reset }: Props) => {
                 color: "#707070"
             }
             : submitted
-                ? {
-                    disabled: false,
-                    text: "Clear selection",
-                    color: "#59dbff"
-                }
-                : list.length
-                ? {
-                    disabled: false,
-                    text: "Find me some jazz",
-                    color: "lightgreen"
-                }
-                : {
-                    disabled: true,
-                    text: "Select at least 1",
-                    color: "lightgrey"
-                }
+            ? {
+                disabled: false,
+                text: "Clear selection",
+                color: "#59dbff"
+            }
+            : list.length
+            ? {
+                disabled: false,
+                text: "Find me some jazz",
+                color: "lightgreen"
+            }
+            : {
+                disabled: true,
+                text: "Select at least 1",
+                color: "lightgrey"
+            }
     return (
         <Form onSubmit={handleSubmit}>
             {children}

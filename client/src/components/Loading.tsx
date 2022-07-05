@@ -14,7 +14,7 @@ const Loader = styled.img`
     width: 60%;
     filter: invert(1);
     animation-name: spin;
-    animation-duration: 1000ms;
+    animation-duration: 800ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     @keyframes spin { 

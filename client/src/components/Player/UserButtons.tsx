@@ -13,9 +13,9 @@ const UserButtonContainer = styled.div`
 `
 
 const Button = styled.button`
+    flex: 1;
     background-color: white;
     mix-blend-mode: screen;
-    flex: 1;
     border-radius: 18px;
     &:not(:first-child) {
         margin-top: 10px;
@@ -45,8 +45,7 @@ interface Props {
 
 const UserButtons = ({toggleOpen, open, playing, id}: Props) => {
     const dispatch = useAppDispatch();
-    const liked = useAppSelector(selectLiked);
-    const isLiked = liked.some((likedId: string) => likedId === id);
+    const isLiked = useAppSelector(selectLiked(id));
     return (
         <UserButtonContainer>
             <Button disabled={!playing} onClick={() => dispatch(toggleLiked({id, isLiked}))}>

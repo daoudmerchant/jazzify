@@ -5,11 +5,11 @@ const SettingsContainer = styled.div`
     height: 100%;
     width: 100%;
     padding: 40px;
-    color: #5C33F6;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: #5C33F6;
 `
 
 const Settings = () => {

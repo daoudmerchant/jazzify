@@ -19,6 +19,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
   }
 
   #root {
@@ -34,6 +35,7 @@ const GlobalStyles = createGlobalStyle`
   button {
     border: none;
     background-color: transparent;
+    font-family: 'Source Sans Pro', sans-serif;
   }
 
   a, a:visited {
