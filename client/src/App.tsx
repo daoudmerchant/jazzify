@@ -35,6 +35,11 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     background-color: transparent;
   }
+
+  a, a:visited {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
 `
 
 const Main = styled.main`

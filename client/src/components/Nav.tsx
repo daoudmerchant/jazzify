@@ -9,7 +9,7 @@ import spotifyEmptyIcon from "../assets/otherIcons/spotify-empty-freepik.png";
 import spotifyFullIcon from "../assets/otherIcons/spotify-full-freepik.png";
 
 const Header = styled.header`
-background: linear-gradient(90deg, rgba(0,85,214,1) 0%, rgba(255,119,224,1) 57%, rgba(218,120,255,1) 94%);
+    background: linear-gradient(90deg, rgba(0,85,214,1) 0%, rgba(255,119,224,1) 57%, rgba(218,120,255,1) 94%);  
 `
 
 const NavElem = styled.nav`

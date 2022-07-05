@@ -42,8 +42,8 @@ export default [
         name: "guitar",
         url: electricGuitar
     },
-    {
-        name: "vibraphone",
-        url: vibraphone
-    }
+    // {
+    //     name: "vibraphone",
+    //     url: vibraphone
+    // }
 ]
