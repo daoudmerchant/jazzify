@@ -23,7 +23,7 @@ export default [
         url: trombone
     },
     {
-        name: "microphone",
+        name: "vocals",
         url: microphone,
     },
     {

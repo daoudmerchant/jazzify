@@ -46,7 +46,8 @@ const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
   instruments.forEach(instr => instrumentQuery.append('instruments', instr));
   const response = await fetch(`http://localhost:3001/api/tracks?${instrumentQuery.toString()}`);
   const tracks = await response.json();
-  const uris = tracks.map(({uri}: {uri: string}) => `spotify:track:${uri}`);
+  const shuffledTracks = tracks.sort(() => Math.random() - 0.5); // TODO: improve
+  const uris = shuffledTracks.map(({uri}: {uri: string}) => `spotify:track:${uri}`);
   await fetch(
     `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
     {

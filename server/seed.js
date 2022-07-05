@@ -42,9 +42,154 @@ const seedArtists = [
     {
         name: "Ed Thigpen",
         instrument: "drums",
+    },
+    {
+        name: "Miles Davis",
+        instrument: "trumpet"
+    },
+    {
+        name: "Cannonball Adderley",
+        instrument: "saxophone"
+    },
+    {
+      name: "John Coltrane",
+      instrument: "saxophone"
+    },
+    {
+      name: "Wynton Kelly",
+      instrument: "piano"
+    },
+    {
+      name: "Paul Chambers",
+      instrument: "bass",
+    },
+    {
+      name: "Jimmy Cobb",
+      instrument: "drums"
+    },
+    {
+      name: "Art Blakey",
+      instrument: "drums"
+    },
+    {
+      name: "Freddie Hubbard",
+      instrument: "trumpet",
+    },
+    {
+      name: "Curtis Fuller",
+      instrument: "trombone"
+    },
+    {
+      name: "Wayne Shorter",
+      instrument: "saxophone"
+    },
+    {
+      name: "Cedar Walton",
+      instrument: "piano"
+    },
+    {
+      name: "Reggie Workman",
+      instrument: "bass"
+    },
+    {
+      name: "Art Tatum",
+      instrument: "piano"
+    },
+    {
+      name: "Ben Webster",
+      instrument: "saxophone",
+    },
+    {
+      name: "Red Callender",
+      instrument: "bass"
+    },
+    {
+      name: "Bill Douglass",
+      instrument: "drums"
+    },
+    {
+      name: "Herbie Hancock",
+      instrument: "piano"
+    },
+    {
+      name: "Joe Henderson",
+      instrument: "saxophone"
+    },
+    {
+      name: "Garnett Brown",
+      instrument: "trombone"
+    },
+    {
+      name: "John Coles",
+      instrument: "trumpet"
+    },
+    {
+      name: "Buster Williams",
+      instrument: "bass"
+    },
+    {
+      name: 'Albert "Tootie" Heath',
+      instrument: "drums"
+    },
+    {
+      name: "Wynton Marsalis",
+      instrument: "trumpet"
+    },
+    {
+      name: "Branford Marsalis",
+      instrument: "saxophone"
+    },
+    {
+      name: "Kenny Kirkland",
+      instrument: "piano"
+    },
+    {
+      name: "Charnett Moffett",
+      instrument: "bass"
+    },
+    {
+      name: 'Jeff "Tain" Watts',
+      instrument: "drums"
+    },
+    {
+      name: "Peter Bernstein",
+      instrument: "guitar"
+    },
+    {
+      name: "Sullivan Fortner",
+      instrumet: "piano"
+    },
+    {
+      name: "Peter Washington",
+      instrument: "bass"
+    },
+    {
+      name: "Joe Farnsworth",
+      instrument: "drums"
     }
+
 ]
 const seedTracks = [
+  {
+    uri: "11hoxqUWlEbxsP39AdwEty", // Simple as That, Peter Bernstein
+    instruments: ["guitar", "piano", "bass", "drums"],
+    artists: ["Peter Bernstein", "Sullivan Fortner", "Peter Washington", "Joe Farnsworth"]
+  },
+  {
+    uri: "7JwB1NWTYssyIx9UQtnKd0", // Delfeayo's Dilemma, Wynton Marsalis
+    instruments: ["trumpet", "saxophone", "piano", "bass", "drums"],
+    artists: ["Wynton Marsalis", "Branford Marsalis", "Kenny Kirkland", "Charnett Moffett", 'Jeff "Tain" Watts']
+  },
+  {
+    uri: "2akqjwBZxyDIEJEJXq4Cvx", // Wiggle Waggle, Herbie Hancock
+    instruments: ["saxophone", "trumpet", "trombone", "piano", "bass", "drums", "guitar"],
+    artists: ["Herbie Hancock", "Joe Henderson", "Garnett Brown", "John Coles", "Buster Williams", 'Albert "Tootie" Heath']
+  },
+  {
+    uri: "3sT3JEJs0I2F04d8uo1pgN", // Night and Day, Ben Webster and Art Tatum
+    instruments: ["saxophone", "piano", "bass", "drums"],
+    artists: ["Art Tatum", "Ben Webster", "Red Callender", "Bill Douglass"]
+  },
   {
     uri: "41K9UjuokxVxCXQT5ug8ps",   // Terra Nova, Kurt Rosenwinkel
     instruments: ["guitar", "saxophone", "piano", "bass", "drums"],
@@ -54,6 +199,16 @@ const seedTracks = [
     uri: "69enZcR3Rr9Bg3fNzHEp9y",   // Things Ain't What They Used To Be, Oscar Peterson
     instruments: ["piano", "bass", "drums"],
     artists: ["Oscar Peterson", "Ray Brown", "Ed Thigpen"]
+  },
+  {
+    uri: "3NvYPUNu6nwQgN31UnoDbn", // So What, Miles Davis,
+    instruments: ["trumpet", "saxophone", "piano", "bass", "drums"],
+    artists: ["Miles Davis", "Cannonball Adderley", "John Coltrane", "Wynton Kelly", "Paul Chambers", "Jimmy Cobb"]
+  },
+  {
+    uri: "7p9XA9tTuQrhG4pEuCJ7qx", // On the Ginza, Art Blakey
+    instruments: ["trumpet", "saxophone", "trombone", "piano", "bass", "drums"],
+    artists: ["Art Blakey", "Freddie Hubbard", "Curtis Fuller", "Wayne Shorter", "Cedar Walton", "Reggie Workman"]
   }
 ];
 const seedDB = async () => {
