@@ -61,7 +61,6 @@ const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
       })
     }
     );
-  console.log(tracks);
   return tracks;
 }
 

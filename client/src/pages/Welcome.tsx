@@ -29,8 +29,8 @@ const Logo = styled.h1`
 const Subtitle = styled.h2`
     text-align: center;
     font-size: 1.3em;
+    font-weight: normal;
     color: #5C33F6;
-    opacity: .6;
 `
 
 const Welcome = () => {

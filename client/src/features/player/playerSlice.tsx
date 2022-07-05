@@ -5,6 +5,25 @@ import { cancelOnLoading } from '../featureHelpers';
 
 import { ObjectId } from 'mongodb';
 
+
+export interface Album {
+  name: string
+  uri: string
+}
+
+export interface Artist {
+  name: string
+  uri: string
+}
+
+export interface Track {
+  name: string
+  id: string
+  album: Album
+  albumCover: string
+  artists: Artist[]
+}
+
 export interface ArtistFromDB {
   name: string,
   instrument: string,
@@ -22,7 +41,19 @@ export interface PlayerState {
   device_id: string,
   status: 'idle' | 'loading' | 'failed';
   tracks: [string],
-  liked: [string];
+  liked: [string]
+  currentTrack: Track | null
+}
+
+const DEFAULT_TRACK: Track = {
+  name: "",
+  id: '',
+  album: {
+      name: "",
+      uri: ""
+  },
+  albumCover: "",
+  artists: [{ name: "", uri: "" }]
 }
 
 export const playTracks = createAsyncThunk(
@@ -32,7 +63,6 @@ export const playTracks = createAsyncThunk(
     // @ts-ignore
     const { user, player } = getState();
     const tracks = await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
-    console.log(tracks);
     return tracks;
   },
   cancelOnLoading('player')
@@ -53,10 +83,14 @@ export const toggleLiked = createAsyncThunk(
 
 export const playerSlice = createSlice({
   name: 'player',
-  initialState: { device_id: null, status: "idle", tracks: [], liked: [] },
+  initialState: { device_id: null, status: "uninitialised", tracks: [], liked: [], currentTrack: DEFAULT_TRACK },
   reducers: {
     setDeviceId: (state, action) => {
-      state.device_id = action.payload
+      state.device_id = action.payload;
+      state.status = "idle";
+    },
+    setCurrentlyPlaying: (state, action) => {
+      state.currentTrack = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -66,7 +100,6 @@ export const playerSlice = createSlice({
       })
       .addCase(playTracks.fulfilled, (state, action) => {
         state.status = "idle"
-        console.log(action.payload)
         state.tracks = action.payload;
       })
       .addCase(playTracks.rejected, (state) => {
@@ -83,8 +116,9 @@ export const playerSlice = createSlice({
 
 export const selectPlayer = (state: any) => state.player;
 export const selectLiked = (state: any) => state.player.liked;
-export const selectTracks = (state: any) => state.player.tracks;
+export const selectCurrentTrack = (state: any) => state.player.currentTrack;
+export const selectArtists = (id: string) => (state: any) => state.player.tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
 
-export const { setDeviceId } = playerSlice.actions;
+export const { setDeviceId, setCurrentlyPlaying } = playerSlice.actions;
 
 export default playerSlice.reducer;

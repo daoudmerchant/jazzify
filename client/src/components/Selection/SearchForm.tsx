@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+
+// redux
 import { useAppSelector } from "../../app/hooks";
 import { selectPlayer } from "../../features/player/playerSlice";
-import styled from "styled-components";
 import { useAppDispatch } from "../../app/hooks";
 import { playTracks } from "../../features/player/playerSlice";
 
@@ -47,7 +49,7 @@ const SearchForm = ({ children, list, reset }: Props) => {
         await dispatch(playTracks(list));
         setSubmitted(true);
     }
-    const buttonStatus = status === "loading"
+    const buttonStatus = status === "loading" || status === "uninitialised"
             ? {
                 disabled: true,
                 text: "Loading",

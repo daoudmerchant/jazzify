@@ -39,23 +39,23 @@ const OpenIcon = styled(ButtonIcon)`
 interface Props {
     toggleOpen: () => void,
     open: boolean
-    ready: boolean
+    playing: boolean
     id: string
 }
 
-const UserButtons = ({toggleOpen, open, ready, id}: Props) => {
+const UserButtons = ({toggleOpen, open, playing, id}: Props) => {
     const dispatch = useAppDispatch();
     const liked = useAppSelector(selectLiked);
     const isLiked = liked.some((likedId: string) => likedId === id);
     return (
         <UserButtonContainer>
-            <Button disabled={!ready} onClick={() => dispatch(toggleLiked({id, isLiked}))}>
+            <Button disabled={!playing} onClick={() => dispatch(toggleLiked({id, isLiked}))}>
                 <ButtonIcon
                     src={isLiked ? fullHeartIcon : emptyHeartIcon}
                     alt={`${isLiked ? "add to" : "remove from"} playlist icon`}
                 />
             </Button>
-            <Button onClick={toggleOpen} disabled={!ready}>
+            <Button disabled={!playing} onClick={toggleOpen}>
                 <OpenIcon src={upIcon} alt="show more icon" $open={open}/>
             </Button>
         </UserButtonContainer>

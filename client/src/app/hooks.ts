@@ -30,20 +30,20 @@ interface Staggered {
 }
 
 export const useStaggered = (ms: number): [Staggered, React.Dispatch<React.SetStateAction<boolean>>] => {
-    const [open, setOpen] = useState(false);
+    const [control, setControl] = useState(false);
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
     useEffect(() => {
-        if (open) {
+        if (control) {
             setFirstOpen(true);
             setTimeout(() => setSecondOpen(true), ms);
             return;
         }
         setSecondOpen(false);
         setTimeout(() => setFirstOpen(false), ms)
-    })
+    }, [control])
     return [
-        { control: open, first: firstOpen, second: secondOpen },
-        setOpen
+        { control, first: firstOpen, second: secondOpen },
+        setControl
     ]
 }

@@ -26,7 +26,6 @@ const getUsername = async (accessToken: string) => {
         }
       )
       const userData = await userResponse.json();
-      console.log(userData);
       return {
         username: userData.display_name,
         img: userData.images[0]?.url || null

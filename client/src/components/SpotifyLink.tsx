@@ -55,7 +55,7 @@ const SpotifyLink = ({loggedIn}: Props) => {
     };
     return (
         <SignIn href="http://localhost:3001/spotify/login">
-            Sign in with Spotify
+            Sign in
             <Icon src={spotifyFull} alt="spotify logo"/>
         </SignIn>
     )

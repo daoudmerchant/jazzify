@@ -12,7 +12,6 @@ import { initAccessToken } from "./features/user/userSlice";
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Login from "./pages/Login";
 import Settings from "./pages/Settings";
 
 const GlobalStyles = createGlobalStyle`
@@ -25,6 +24,7 @@ const GlobalStyles = createGlobalStyle`
   #root {
     display: grid;
     grid-template-rows: 70px 1fr;
+    min-width: 315px;
   }
 
   * {
@@ -60,7 +60,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="about" element={<About />} />
-              <Route path="login" element={<Login />} />
               <Route path="settings" element={<Settings />} />
             </Routes>
           </Main>

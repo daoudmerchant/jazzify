@@ -42,13 +42,13 @@ const About = () => {
     return (
         <AboutContainer>
             {aboutCopy.map(({q, a}: CopyItem) => (
-                <>
+                <div key={q}>
                     <Question>{q}</Question>
                     <Answer>{a}</Answer>
-                </>
+                </div>
             ))}
             <GitHub>Daoud Merchant, 2022
-                <a href="https://github.com/daoudmerchant/jazzify/">
+                <a href="https://github.com/daoudmerchant/jazzify/" target="_blank">
                     <GithubIcon src={githubIcon} alt="github logo"/>
                 </a>
             </GitHub>

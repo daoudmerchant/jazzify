@@ -1,40 +1,25 @@
 import { useEffect, useState, createContext } from "react";
 import styled from "styled-components";
-import { useAppDispatch } from "../app/hooks";
 
-import { setDeviceId } from "../features/player/playerSlice";
+// redux
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectCurrentTrack } from "../features/player/playerSlice";
+import { setDeviceId, setCurrentlyPlaying } from "../features/player/playerSlice";
 
 import Player from "../components/Player/Player";
 import Selection from "../components/Selection/Selection";
 
+import { Track } from "../features/player/playerSlice";
 
 export interface PlayerState {
     paused: boolean,
-    player: any
+    player: any,
 }
 
 export const PlayStateContext = createContext<PlayerState>({ paused: false, player: {} });
 
 interface Props {
     accessToken: string,
-}
-
-interface Album {
-    name: string
-    uri: string
-}
-
-export interface Artist {
-    name: string
-    uri: string
-}
-
-export interface Track {
-    name: string
-    id: string
-    album: Album
-    albumCover: string
-    artists: Artist[]
 }
 
 const MainContainer = styled.div`
@@ -47,19 +32,9 @@ const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
     const [player, setPlayer] = useState(null);
     const [paused, setPaused] = useState(false);
-    const [track, setTrack] = useState<Track>({
-        name: "",
-        id: '',
-        album: {
-            name: "",
-            uri: ""
-        },
-        albumCover: "",
-        artists: [{ name: "", uri: "" }]
-    })
-
+    const track = useAppSelector(selectCurrentTrack)
     useEffect(() => {
-        if (!accessToken) {
+        if (!accessToken || player) {
             return;
         }
         // Have to initialise and store here because Redux reducers can't have side effects :(
@@ -78,20 +53,17 @@ const Main = ({ accessToken }: Props) => {
             });
             setPlayer(player);
             player.addListener('ready', ({ device_id }: { device_id: string }) => {
-                console.log('Ready with Device ID', device_id);
                 dispatch(setDeviceId(device_id))
             });
-
-            player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
-                console.log('Device ID has gone offline', device_id);
-            });
-
+            // player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
+            //     console.log('Device ID has gone offline', device_id);
+            // });
             player.addListener('player_state_changed', (state: any) => { // sorry
                 if (!state) {
                     return;
                 }
                 const currentTrack = state.track_window.current_track;
-                setTrack({
+                const parsedTrack = {
                     name: currentTrack.name,
                     id: currentTrack.id,
                     album: {
@@ -100,12 +72,13 @@ const Main = ({ accessToken }: Props) => {
                     },
                     albumCover: currentTrack.album.images[0].url,
                     artists: currentTrack.artists
-                })
+                }
+                dispatch(setCurrentlyPlaying(parsedTrack))
                 setPaused(state.paused);
             });
             player.connect();
         }
-    }, [accessToken]) // eslint-disable-line
+    }, [accessToken, player]);
     return (
         <MainContainer>
             <Selection />

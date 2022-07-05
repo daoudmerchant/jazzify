@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useStaggered } from "../../app/hooks";
 
 // types
-import { Track } from "../../pages/Main"
+import { Track } from "../../features/player/playerSlice";
 
 // components
 import TrackInfo from "./TrackInfo";
@@ -19,13 +19,14 @@ interface Props {
 const PlayerContainer = styled.section`
     position: absolute;
     bottom: 0;
+    z-index: 200;
+    height: ${(props: { $open: boolean }) => props.$open ? "100vh" : "150px"};
+    width: 100%;
     transition: .5s all;
     background: linear-gradient(153deg, rgba(1,1,1,1) 0%,
                                         rgba(143,143,143,1) 19%,
                                         rgba(73,73,73,1) 42%,
                                         rgba(0,0,0,1) 100%);
-    height: ${(props: { $open: boolean }) => props.$open ? "100vh" : "150px"};
-    width: 100%;
     overflow: hidden;
 `
 
@@ -38,11 +39,11 @@ const PlayerSheen = styled.div`
 `
 
 const PlayerFlexContainer = styled.div`
+    position: absolute;
     height: 150px;
     width: 100%;
-    display: flex;
-    position: absolute;
     padding: 20px;
+    display: flex;
     bottom: ${(props: { $above: boolean}) => props.$above ? "0" : "auto"};
     & > * {
         &:first-child {
@@ -71,7 +72,7 @@ const AlbumCover = styled.img`
 
 const Player = ({ track }: Props) => {
     const [{control, first, second}, setOpen] = useStaggered(350)
-    const ready = Boolean(track.name.length)
+    const playing = Boolean(track.name.length)
     return (
         <PlayerContainer $open={first}>
             <PlayerSheen>
@@ -84,7 +85,7 @@ const Player = ({ track }: Props) => {
                 <ArtistList open={second} id={track.id} />
                 <PlayerFlexContainer $above={true}>
                     <Controls open={second} />
-                    <UserButtons ready={ready} id={track.id} toggleOpen={() => setOpen(prev => !prev)} open={control} />
+                    <UserButtons playing={playing} id={track.id} toggleOpen={() => setOpen(prev => !prev)} open={control} />
                 </PlayerFlexContainer>
             </PlayerSheen>
         </PlayerContainer>

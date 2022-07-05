@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { useAppSelector } from "../app/hooks";
 import { selectSpotifyUser } from "../features/user/userSlice";
@@ -13,10 +13,6 @@ const Header = styled.header`
 `
 
 const NavElem = styled.nav`
-    a, a:visited {
-        text-decoration: none;
-        -webkit-tap-highlight-color: transparent;
-    }
     height: 100%;
     display: flex;
     padding-inline: 10px;
@@ -34,7 +30,7 @@ const Logo = styled(NavLink)`
     color: black;
 `
 
-const MyLink = styled(NavLink)`
+const LinkStyle = css`
     border: 3px solid black;
     height: 70%;
     margin-inline: 5px;
@@ -52,12 +48,12 @@ const MyLink = styled(NavLink)`
     }
 `
 
-const About = styled(MyLink)`
-    font-size: 30px;
-    font-weight: bold;
+const MyLink = styled(NavLink)`
+    ${LinkStyle}
 `
 
-const Login = styled(MyLink)`
+const SignIn = styled.a`
+    ${LinkStyle}
     border: 0;
     padding: 0;
     background-size: contain;
@@ -66,6 +62,11 @@ const Login = styled(MyLink)`
         background-color: white;
         background-image: url(${spotifyFullIcon})
     }
+`
+
+const About = styled(MyLink)`
+    font-size: 30px;
+    font-weight: bold;
 `
 
 const UserIcon = styled.img`
@@ -96,10 +97,10 @@ const Nav = () => {
             {user?.img && !imgFailed ? <UserIcon src={user.img} alt={`Profile pic for ${user.username}`} onError={handleImgError} /> : null}
             <NavElem>
                 <Logo to="/">Jazzify</Logo>
-                <About to="/about">?</About>
+                <About to="about">?</About>
                 { !user
-                    ? <Login to="login" />
-                    : <MyLink to="/settings">
+                    ? <SignIn href="http://localhost:3001/spotify/login" />
+                    : <MyLink to="settings">
                         <UserInitial>{user.username.charAt(0).toUpperCase()}</UserInitial>
                     </MyLink>
                 }

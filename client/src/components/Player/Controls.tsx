@@ -1,6 +1,12 @@
 import { useContext } from "react";
 import styled, {css} from "styled-components";
 
+// context
+import { PlayStateContext } from "../../pages/Main";
+
+// types
+import { PlayerState } from "../../pages/Main";
+
 // icons
 import backIcon from "../../assets/playerIcons/back-inkubators.png";
 import nextIcon from "../../assets/playerIcons/next-inkubators.png"
@@ -9,10 +15,6 @@ import pauseIcon from "../../assets/playerIcons/pause-inkubators.png";
 import curveLeft from "../../assets/playerIcons/curve-left-revicon.png";
 import curveRight from "../../assets/playerIcons/curve-right-revicon.png";
 
-import { PlayStateContext } from "../../pages/Main";
-
-// types
-import { PlayerState } from "../../pages/Main";
 
 const depressButton = (inverted: boolean) => css`
     &:active {
@@ -22,26 +24,26 @@ const depressButton = (inverted: boolean) => css`
 `
 
 const SkipButtonContainer = styled.div`
+    width: 110px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 110px;
 `
 
 const SkipButton = styled.button`
     position: relative;
-    color: white;
     transition: .3s all;
+    color: white;
     opacity: ${(props: { $open: boolean}) => props.$open ? "1" : "0"};
     ${depressButton(false)}
 `
 
 const SkipText = styled.p`
-    margin: 0;
-    font-size: 20px;
     position: absolute;
     left: 50%;
     top: 50%;
+    margin: 0;
+    font-size: 20px;
     transform: translate(-50%, -50%);
 `
 
@@ -50,12 +52,12 @@ const Seconds = styled.span`
 `
 
 const PlayerButtonContainer = styled.div`
+    padding-inline: 10px;
+    max-width: 170px;
     display: flex;
     justify-content: space-around;
-    padding-inline: 10px;
     align-items: center;
     flex-grow: 1;
-    max-width: 170px;
 `
 
 const PlayerIcon = styled.img`

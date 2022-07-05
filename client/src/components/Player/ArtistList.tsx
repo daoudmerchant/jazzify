@@ -1,16 +1,20 @@
 import styled from "styled-components";
+
+// redux
 import { useAppSelector } from "../../app/hooks";
-import { selectTracks } from "../../features/player/playerSlice";
+import { selectArtists } from "../../features/player/playerSlice";
 
-import { TrackFromDB, ArtistFromDB } from "../../features/player/playerSlice";
+// types
+import { ArtistFromDB } from "../../features/player/playerSlice";
 
+// components
 import ArtistCard from "./ArtistCard";
 
 const ArtistContainer = styled.div`
-    height: calc(100vh - 320px);
-    overflow-y: scroll;
     position: relative;
     top: calc(150px + 1.5em);
+    height: calc(100vh - 320px);
+    overflow-y: scroll;
     transition: .3s all;
     opacity: ${(props: {$open: boolean}) => props.$open ? "1" : "0"};
 `
@@ -21,11 +25,10 @@ interface Props {
 }
 
 const ArtistList = ({open, id}: Props) => {
-    const tracks = useAppSelector(selectTracks)
-    const currentArtists = tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
+    const artists = useAppSelector(selectArtists(id))
     return (
         <ArtistContainer $open={open}>
-            {currentArtists.map((artist: ArtistFromDB) => <ArtistCard open={open} key={artist._id.toString()} artist={artist}/>)}
+            {artists.map((artist: ArtistFromDB) => <ArtistCard open={open} key={artist._id.toString()} artist={artist}/>)}
         </ArtistContainer>
     )
 }

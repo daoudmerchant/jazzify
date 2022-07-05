@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-import { Track, Artist } from "../../pages/Main";
+import { Track, Artist } from "../../features/player/playerSlice";
 
 
 interface Props {
@@ -10,30 +9,30 @@ interface Props {
 }
 
 const TrackInfoContainer = styled.div`
-    color: white;
     height: 110px;
+    padding-inline: 10px;
     display: grid;
     grid-template-rows: 60px 30px 20px;
     align-items: center;
-    padding-inline: 10px;
+    color: white;
     transition: .3s all;
     opacity: ${(props: { $open: boolean} ) => props.$open ? "1" : "0"};
 `
 
 const Name = styled.h2`
+    margin: 0;
     font-size: 18px;
     overflow-wrap: anywhere;
-    margin: 0;
 `
 
 const Artists = styled.p`
-    font-size: 14px;
     margin: 0;
+    font-size: 14px;
 `
 
 const Album = styled.p`
-    font-size: 12px;
     margin: 0;
+    font-size: 12px;
 `
 
 const TrackInfo = ({track, open}: Props) => {
