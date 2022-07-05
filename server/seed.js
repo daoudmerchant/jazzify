@@ -157,7 +157,7 @@ const seedArtists = [
     },
     {
       name: "Sullivan Fortner",
-      instrumet: "piano"
+      instrument: "piano"
     },
     {
       name: "Peter Washington",
@@ -166,10 +166,27 @@ const seedArtists = [
     {
       name: "Joe Farnsworth",
       instrument: "drums"
+    },
+    {
+      name: "Massimo Biolcati",
+      instrument: "bass"
+    },
+    {
+      name: "Gretchen Parlato",
+      instrument: "vocals"
+    },
+    {
+      name: "Aaron Parks",
+      instrument: piano
     }
 
 ]
 const seedTracks = [
+  {
+    uri: "66lPgenfvsvf3UBgTEhIML", // Flor de Lis, Gretchen Parlato
+    instruments: ["vocals", "piano", "guitar", "bass"],
+    artists: ["Gretchen Parlato", "Lionel Loueke", "Aaron Parks", "Massimo Biolcati"]
+  },
   {
     uri: "11hoxqUWlEbxsP39AdwEty", // Simple as That, Peter Bernstein
     instruments: ["guitar", "piano", "bass", "drums"],
