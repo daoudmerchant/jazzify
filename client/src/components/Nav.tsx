@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import { useAppSelector } from "../app/hooks";
@@ -68,7 +69,16 @@ const Login = styled(MyLink)`
 `
 
 const UserIcon = styled.img`
+    position: absolute;
+    z-index: 100;
     height: 100%;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    right: 17px;
+    top: 13px;
+    object-fit: cover;
+    pointer-events: none;
 `
 
 const UserInitial = styled.p`
@@ -77,20 +87,19 @@ const UserInitial = styled.p`
 `
 
 const Nav = () => {
+    const [imgFailed, setImgFailed] = useState(false);
+    const handleImgError = () => setImgFailed(true);
     // @ts-ignore
     const user = useAppSelector(selectSpotifyUser);
     return (
         <Header>
+            {user?.img && !imgFailed ? <UserIcon src={user.img} alt={`Profile pic for ${user.username}`} onError={handleImgError} /> : null}
             <NavElem>
                 <Logo to="/">Jazzify</Logo>
                 <About to="/about">?</About>
                 { !user
                     ? <Login to="login" />
                     : <MyLink to="/settings">
-                        {/* {user.img
-                            ? <UserIcon src={user.img} alt={user.username}/>
-                            : <UserInitial>{user.username.charAt(0).toUpperCase()}</UserInitial>
-                        } // TODO: Fix user image icon */}
                         <UserInitial>{user.username.charAt(0).toUpperCase()}</UserInitial>
                     </MyLink>
                 }
