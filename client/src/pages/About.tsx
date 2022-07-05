@@ -48,7 +48,7 @@ const About = () => {
                 </>
             ))}
             <GitHub>Daoud Merchant, 2022
-                <a href="">
+                <a href="https://github.com/daoudmerchant/jazzify/">
                     <GithubIcon src={githubIcon} alt="github logo"/>
                 </a>
             </GitHub>
