@@ -78,8 +78,7 @@ const Fallback = () => <Italic>No biography available</Italic>
 const ArtistCard = ({artist, open}: Props) => {
     const dispatch = useAppDispatch();
     const [{ first, second, control }, setOpen] = useStaggered(350);
-    const artistInfo = useAppSelector(selectArtistInfo);
-    const thisArtist = artistInfo[artist.name];
+    const { thisArtist, status } = useAppSelector(selectArtistInfo(artist.name));
     const icon = instrumentIcons.find(({name}: {name: string}) => name === artist.instrument) || { url: '', name: ''};
 
     useEffect(() => {
@@ -89,7 +88,7 @@ const ArtistCard = ({artist, open}: Props) => {
     }, [open])
     const handleOpen = () => {
         setOpen(prev => !prev);
-        if (artistInfo[artist.name]) {
+        if (thisArtist) {
             return;
         }
         dispatch(getArtistBio(artist.name))
@@ -101,7 +100,11 @@ const ArtistCard = ({artist, open}: Props) => {
                 <Name>{artist.name}</Name>
                 <OpenIcon $open={control} src={upIcon} alt={`${open ? "hide" : "show"} biography`}/>
             </ArtistHeader>
-            <Biography $open={!open ? false : first} $visible={!open ? false : second}>{thisArtist?.bio || <Fallback/>}</Biography>
+            <Biography $open={!open ? false : first} $visible={!open ? false : second}>{
+                status === "loading"
+                    ? "..."
+                    :  thisArtist?.bio || <Fallback/>
+            }</Biography>
         </Card>
     )
 }

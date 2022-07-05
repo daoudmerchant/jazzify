@@ -57,6 +57,7 @@ export const artistInfoSlice = createSlice({
   }
 })
 
-export const selectArtistInfo = (state: any) => state.artistInfo.artists;
+export const selectArtistInfo = (name: string) => (state: any) =>
+  ({ status: state.artistInfo.status, thisArtist: state.artistInfo.artists[name]});
 
 export default artistInfoSlice.reducer;
