@@ -1,5 +1,9 @@
+import styled from "styled-components";
+
+import SpotifyLink from "../components/SpotifyLink";
+
 const Login = () => {
-    return <p><a href="http://localhost:3001/spotify/login">Login with Spotify</a></p>
+    return <p><SpotifyLink loggedIn={false}/></p>
 }
 
 export default Login;

@@ -1,15 +1,24 @@
-import { useAppDispatch } from "../app/hooks";
-import { useNavigate } from 'react-router-dom';
-import { signOut } from "../features/user/userSlice";
+import styled from "styled-components";
+import SpotifyLink from "../components/SpotifyLink";
+
+const SettingsContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    padding: 40px;
+    color: #5C33F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
 
 const Settings = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    return <button onClick={() => {
-        // @ts-ignore
-        dispatch(signOut())
-        navigate('/')
-    }}>Sign Out</button>
+    return (
+    <SettingsContainer>
+        (Imagine a bunch of settings here)
+        <SpotifyLink loggedIn={true}/>
+    </SettingsContainer>
+    )
 }
 
 export default Settings;

@@ -39,7 +39,7 @@ const GlobalStyles = createGlobalStyle`
   a, a:visited {
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
-}
+  }
 `
 
 const Main = styled.main`

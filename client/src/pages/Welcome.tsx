@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import spotifyFull from "../assets/otherIcons/spotify-full-freepik.png";
+import SpotifyLink from "../components/SpotifyLink";
 
 const WelcomeContainer = styled.div`
     width: 100%;
@@ -33,36 +33,13 @@ const Subtitle = styled.h2`
     opacity: .6;
 `
 
-const SignIn = styled.a`
-    background-color: white;
-    font-weight: bold;
-    margin-top: auto;
-    margin-bottom: 3em;
-    padding: 1em 1.5em;
-    border-radius: 1.5em;
-    border-style: solid;
-    border-width: 4px;
-    border-color: #5C33F6 #5C33F6 white white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`
-
-const Icon = styled.img`
-    height: 1.5em;
-    margin-left: 10px;
-`
-
 const Welcome = () => {
     return (
         <WelcomeContainer>
             <WelcomeCard>
                 <Logo>Jazzify</Logo>
                 <Subtitle>The Spotify-powered jazz discovery app</Subtitle>
-                <SignIn>
-                    Sign in with Spotify
-                    <Icon src={spotifyFull} alt="spotify logo"/>
-                </SignIn>
+                <SpotifyLink loggedIn={false} />
             </WelcomeCard>
         </WelcomeContainer>
     )
