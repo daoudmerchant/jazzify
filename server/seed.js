@@ -172,12 +172,16 @@ const seedArtists = [
       instrument: "bass"
     },
     {
+      name: "Lionel Loueke",
+      instrument: "guitar"
+    },
+    {
       name: "Gretchen Parlato",
       instrument: "vocals"
     },
     {
       name: "Aaron Parks",
-      instrument: piano
+      instrument: "piano"
     }
 
 ]

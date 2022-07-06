@@ -9,6 +9,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import { useAppDispatch } from "./app/hooks";
 import { initAccessToken } from "./features/user/userSlice";
 
+import Warning from './components/Warning';
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -56,6 +57,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
+        <Warning/>
         <Router>
           <Nav/>
           <Main>
