@@ -30,20 +30,44 @@ export interface TokenQuery {
 
 const defaultState = { token: null, spotifyUser: null, deviceId: null, status: 'idle'}
 
+// export const getUserAccessToken = createAsyncThunk(
+//   'users/getAccessToken',
+//   async ({ code, state }: TokenQuery) => {
+//     const token = await userAPI.getNewToken({code, state});
+//     const spotifyUser = await userAPI.getUsername(token.access_token);
+//     const loginState = {
+//       spotifyUser,
+//       token: {
+//         ...token,
+//         expires: getExpiry(token.expires_in)
+//       }
+//     };
+//     return loginState;
+//   },
+//   cancelOnLoading("user")
+// )
+
 export const getUserAccessToken = createAsyncThunk(
-  'users/getAccessToken',
-  async ({ code, state }: TokenQuery) => {
-    const token = await userAPI.getNewToken({code, state});
-    const spotifyUser = await userAPI.getUsername(token.access_token);
-    const loginState = {
-      spotifyUser,
-      token: {
-        ...token,
-        expires: getExpiry(token.expires_in)
-      }
-    };
-    window.localStorage.setItem('jazzify', JSON.stringify(loginState));
-    return loginState;
+    'users/getAccessToken',
+    async ({ code, state }: TokenQuery) => {
+      const token = await userAPI.getNewToken({code, state});
+      return {
+          ...token,
+          expires: getExpiry(token.expires_in)
+        }
+    },
+    cancelOnLoading("user")
+  )
+
+export const getUserDetails = createAsyncThunk(
+  'users/getUserDetails',
+  async (accessToken: string, { getState }) => {
+    // @ts-ignore
+    const { user } = getState();
+    const spotifyUser = await userAPI.getUsername(accessToken);
+    const userState = { token: user.token, spotifyUser }
+    window.localStorage.setItem('jazzify', JSON.stringify(userState));
+    return spotifyUser;
   },
   cancelOnLoading("user")
 )
@@ -93,12 +117,20 @@ export const userSlice = createSlice({
       })
       .addCase(getUserAccessToken.fulfilled, (state, action) => {
         state.status = 'idle'
-        const { token, spotifyUser } = action.payload;
-        state.token = token;
-        // @ts-ignore
-        state.spotifyUser = spotifyUser;
+        state.token = action.payload;
       })
       .addCase(getUserAccessToken.rejected, (state) => {
+          state.status = 'failed';
+      })
+      .addCase(getUserDetails.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.status = 'idle'
+        // @ts-ignore
+        state.spotifyUser = action.payload;
+      })
+      .addCase(getUserDetails.rejected, (state) => {
           state.status = 'failed';
       })
       .addCase(initAccessToken.pending, (state) => {

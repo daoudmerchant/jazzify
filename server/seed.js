@@ -222,11 +222,6 @@ const seedTracks = [
     artists: ["Oscar Peterson", "Ray Brown", "Ed Thigpen"]
   },
   {
-    uri: "3NvYPUNu6nwQgN31UnoDbn", // So What, Miles Davis,
-    instruments: ["trumpet", "saxophone", "piano", "bass", "drums"],
-    artists: ["Miles Davis", "Cannonball Adderley", "John Coltrane", "Wynton Kelly", "Paul Chambers", "Jimmy Cobb"]
-  },
-  {
     uri: "7p9XA9tTuQrhG4pEuCJ7qx", // On the Ginza, Art Blakey
     instruments: ["trumpet", "saxophone", "trombone", "piano", "bass", "drums"],
     artists: ["Art Blakey", "Freddie Hubbard", "Curtis Fuller", "Wayne Shorter", "Cedar Walton", "Reggie Workman"]

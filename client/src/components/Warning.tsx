@@ -24,7 +24,6 @@ const Container = styled.div`
 `
 
 const LogoElem = styled.h1`
-    margin: none;
     font-family: 'Monoton', cursive;
 `
 
