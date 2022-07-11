@@ -10,6 +10,7 @@ import { useAppDispatch } from "./app/hooks";
 import { initAccessToken } from "./features/user/userSlice";
 
 import Warning from './components/Warning';
+import DesktopWrapper from './components/DesktopWrapper';
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -24,9 +25,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   #root {
-    display: grid;
-    grid-template-rows: 70px 1fr;
-    min-width: 315px;
+    background: linear-gradient(138deg, rgba(252, 180, 245, .5) 0%, rgba(250, 230, 247, .5) 20%, rgba(224, 250, 255, .5) 100%);
   }
 
   * {
@@ -46,8 +45,9 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const Main = styled.main`
-  background: linear-gradient(138deg, #fcb4f5 0%, #fae6f7 20%, #e0faff 100%);
+  background: linear-gradient(138deg, rgb(252, 180, 245) 0%, rgb(250, 230, 247) 20%, rgb(224, 250, 255) 100%);
 `
+
 
 function App() {
   const dispatch = useAppDispatch();
@@ -59,14 +59,18 @@ function App() {
       <GlobalStyles />
         <Warning/>
         <Router>
-          <Nav/>
-          <Main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="settings" element={<Settings />} />
-            </Routes>
-          </Main>
+          <DesktopWrapper>
+            <>
+              <Nav/>
+              <Main>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="about" element={<About />} />
+                  <Route path="settings" element={<Settings />} />
+                </Routes>
+              </Main>
+            </>
+          </DesktopWrapper>
         </Router>
     </>
   );

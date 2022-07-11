@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import styled, {css} from "styled-components";
 
-// context
-import { PlayStateContext } from "../../pages/Main";
-
-// types
-import { PlayerState } from "../../pages/Main";
+// redux
+import { useAppSelector } from "../../app/hooks";
+import { selectPlayer } from "../../features/player/playerSlice";
 
 // icons
 import backIcon from "../../assets/playerIcons/back-inkubators.png";
@@ -74,7 +71,7 @@ interface Props {
 }
 
 const Controls = ({open}: Props) => {
-    const { paused, player } = useContext<PlayerState>(PlayStateContext)
+    const { paused, player } = useAppSelector(selectPlayer)
     const skip = async (isBack: boolean) => {
         const { duration, position } = await player.getCurrentState();
         const tenSecs = 1000 * 10;

@@ -37,11 +37,13 @@ export interface TrackFromDB {
 }
 
 export interface PlayerState {
+  player: any,
   device_id: string,
   status: 'idle' | 'loading' | 'failed';
   tracks: [string],
-  liked: [string]
-  currentTrack: Track | null
+  liked: [string],
+  currentTrack: Track | null,
+  paused: boolean
 }
 
 const DEFAULT_TRACK: Track = {
@@ -53,6 +55,16 @@ const DEFAULT_TRACK: Track = {
   },
   albumCover: "",
   artists: [{ name: "", uri: "" }]
+}
+
+const DEFAULT_STATE = {
+  player: null,
+  device_id: null,
+  status: "uninitialised",
+  tracks: [],
+  liked: [],
+  currentTrack: DEFAULT_TRACK,
+  paused: false
 }
 
 export const playTracks = createAsyncThunk(
@@ -82,7 +94,7 @@ export const toggleLiked = createAsyncThunk(
 
 export const playerSlice = createSlice({
   name: 'player',
-  initialState: { device_id: null, status: "uninitialised", tracks: [], liked: [], currentTrack: DEFAULT_TRACK },
+  initialState: DEFAULT_STATE,
   reducers: {
     setDeviceId: (state, action) => {
       state.device_id = action.payload;
@@ -90,6 +102,12 @@ export const playerSlice = createSlice({
     },
     setCurrentlyPlaying: (state, action) => {
       state.currentTrack = action.payload;
+    },
+    setPlayer: (state, action) => {
+      state.player = action.payload;
+    },
+    setPlayState: (state, action) => {
+      state.paused = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -120,6 +138,6 @@ export const selectCurrentTrack = (state: any) => state.player.currentTrack;
 export const selectArtists = (id: string) => (state: any) =>
   state.player.tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
 
-export const { setDeviceId, setCurrentlyPlaying } = playerSlice.actions;
+export const { setDeviceId, setCurrentlyPlaying, setPlayer, setPlayState } = playerSlice.actions;
 
 export default playerSlice.reducer;

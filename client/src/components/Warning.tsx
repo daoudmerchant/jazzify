@@ -50,12 +50,12 @@ const Warning = () => {
                 Sorry, this app is not yet optimised for screens below 330px
             </Container>
         </TooSmall>
-        <TooBig>
+        {/* <TooBig>
             <Container>
                 <Logo/>
                 Sorry, this app is currently a mobile-only experience (made in my free time around the School of Applied Technology coding bootcamp).
             </Container>
-        </TooBig>
+        </TooBig> */}
     </>
   );
 };

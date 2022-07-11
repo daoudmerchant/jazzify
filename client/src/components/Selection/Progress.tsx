@@ -16,11 +16,11 @@ const Container = styled.div`
 `
 
 const Circle = styled.div`
-    height: 12vw;
-    width: 12vw;
-    padding: 1.2vw;
+    height: 12%;
+    width: 12%;
+    padding: 1.2%;
     transition: .2s linear all;
-    border: 2vw solid ${(props: { $active: boolean }) => props.$active ? "#59dbff" : "white"};
+    border: .4em solid ${(props: { $active: boolean }) => props.$active ? "#59dbff" : "white"};
     border-radius: 50%;
     transform: scale(${(props: { $active: boolean }) => props.$active ? "1.2" : "1"});
     & > * {
@@ -37,15 +37,15 @@ const Circle = styled.div`
 `
 
 const EmptyLine = styled.div`
-    height: 1.2vw;
-    width: 14vw;
+    height: .5em;
+    width: 14%;
     background-color: white;
 `
 
 const FilledLine = styled.div`
-    height: 1.4vw;
-    width: ${(props: { $active: boolean }) => props.$active ? "14vw" : "0"};
-    transition: .2s linear all;
+    height: .5em;
+    width: ${(props: { $active: boolean }) => props.$active ? "100%" : "0"};
+    transition: .15s linear all;
     background-color: #59dbff;
 `
 

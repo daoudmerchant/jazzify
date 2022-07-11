@@ -20,7 +20,7 @@ const PlayerContainer = styled.section`
     position: absolute;
     bottom: 0;
     z-index: 200;
-    height: ${(props: { $open: boolean }) => props.$open ? "100vh" : "150px"};
+    height: ${(props: { $open: boolean }) => props.$open ? "100%" : "150px"};
     width: 100%;
     transition: .5s all;
     background: linear-gradient(153deg, rgba(1,1,1,1) 0%,

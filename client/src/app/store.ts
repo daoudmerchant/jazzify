@@ -9,6 +9,9 @@ export const store = configureStore({
     player: playerReducer,
     artistInfo: artistInfoReducer
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false
+  })
 });
 
 export type AppDispatch = typeof store.dispatch;

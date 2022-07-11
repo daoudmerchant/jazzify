@@ -13,7 +13,7 @@ import ArtistCard from "./ArtistCard";
 const ArtistContainer = styled.div`
     position: relative;
     top: calc(150px + 1.5em);
-    height: calc(100vh - 320px);
+    height: calc(100% - 320px);
     overflow-y: scroll;
     transition: .3s all;
     opacity: ${(props: {$open: boolean}) => props.$open ? "1" : "0"};

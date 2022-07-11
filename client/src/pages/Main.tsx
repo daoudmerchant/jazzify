@@ -1,9 +1,9 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 // redux
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { selectCurrentTrack } from "../features/player/playerSlice";
+import { selectPlayer, setPlayer, setPlayState } from "../features/player/playerSlice";
 import { setDeviceId, setCurrentlyPlaying } from "../features/player/playerSlice";
 
 import Player from "../components/Player/Player";
@@ -13,8 +13,6 @@ export interface PlayerState {
     paused: boolean,
     player: any,
 }
-
-export const PlayStateContext = createContext<PlayerState>({ paused: false, player: {} });
 
 interface Props {
     accessToken: string,
@@ -28,9 +26,7 @@ const MainContainer = styled.div`
 
 const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
-    const track = useAppSelector(selectCurrentTrack)
-    const [player, setPlayer] = useState(null);
-    const [paused, setPaused] = useState(false);
+    const { currentTrack, player, paused } = useAppSelector(selectPlayer);
     useEffect(() => {
         if (!accessToken || player) {
             return;
@@ -49,13 +45,11 @@ const Main = ({ accessToken }: Props) => {
                 getOAuthToken: (cb: (token: string) => void) => cb(accessToken),
                 volume: 0.5
             });
-            setPlayer(player);
+            dispatch(setPlayer(player));
             player.addListener('ready', ({ device_id }: { device_id: string }) => {
+                console.log("Ready on device ", device_id)
                 dispatch(setDeviceId(device_id))
             });
-            // player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
-            //     console.log('Device ID has gone offline', device_id);
-            // });
             player.addListener('player_state_changed', (state: any) => { // sorry
                 if (!state) {
                     return;
@@ -72,7 +66,7 @@ const Main = ({ accessToken }: Props) => {
                     artists: currentTrack.artists
                 }
                 dispatch(setCurrentlyPlaying(parsedTrack))
-                setPaused(state.paused);
+                dispatch(setPlayState(state.paused));
             });
             player.connect();
         }
@@ -82,9 +76,7 @@ const Main = ({ accessToken }: Props) => {
             <Selection />
             {/*
             // @ts-ignore */}
-            <PlayStateContext.Provider value={{ paused, player }}>
-                <Player track={track} />
-            </PlayStateContext.Provider>
+            <Player track={currentTrack} />
         </MainContainer>
     )
 }
