@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import userAPI from './userAPI';
 
 import { cancelOnLoading, getExpiry } from "../featureHelpers";
@@ -28,24 +28,7 @@ export interface TokenQuery {
   state: string
 }
 
-const defaultState = { token: null, spotifyUser: null, deviceId: null, status: 'idle'}
-
-// export const getUserAccessToken = createAsyncThunk(
-//   'users/getAccessToken',
-//   async ({ code, state }: TokenQuery) => {
-//     const token = await userAPI.getNewToken({code, state});
-//     const spotifyUser = await userAPI.getUsername(token.access_token);
-//     const loginState = {
-//       spotifyUser,
-//       token: {
-//         ...token,
-//         expires: getExpiry(token.expires_in)
-//       }
-//     };
-//     return loginState;
-//   },
-//   cancelOnLoading("user")
-// )
+const defaultState = { token: null, spotifyUser: null, deviceId: null, status: 'idle'};
 
 export const getUserAccessToken = createAsyncThunk(
     'users/getAccessToken',

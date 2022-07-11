@@ -1,9 +1,10 @@
 import styled, {css} from "styled-components"
 
 // redux
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "../features/user/userSlice";
+import { selectPlayer } from "../features/player/playerSlice";
 
 // icons
 import spotifyFull from "../assets/otherIcons/spotify-full-freepik.png";
@@ -42,12 +43,14 @@ interface Props {
 }
 
 const SpotifyLink = ({loggedIn}: Props) => {
+    const { player } = useAppSelector(selectPlayer);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     if (loggedIn) {
         return (
-            <SignOut onClick={() => {
+            <SignOut onClick={async () => {
                 // @ts-ignore
+                await player.pause()
                 dispatch(signOut())
                 navigate('/')
             }}>

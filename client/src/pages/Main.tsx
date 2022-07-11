@@ -47,7 +47,6 @@ const Main = ({ accessToken }: Props) => {
             });
             dispatch(setPlayer(player));
             player.addListener('ready', ({ device_id }: { device_id: string }) => {
-                console.log("Ready on device ", device_id)
                 dispatch(setDeviceId(device_id))
             });
             player.addListener('player_state_changed', (state: any) => { // sorry

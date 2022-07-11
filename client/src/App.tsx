@@ -46,6 +46,7 @@ const GlobalStyles = createGlobalStyle`
 
 const Main = styled.main`
   background: linear-gradient(138deg, rgb(252, 180, 245) 0%, rgb(250, 230, 247) 20%, rgb(224, 250, 255) 100%);
+  overflow-y: scroll;
 `
 
 

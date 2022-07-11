@@ -28,9 +28,26 @@ const Logo = styled.h1`
 
 const Subtitle = styled.h2`
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1.4em;
     font-weight: normal;
     color: #5C33F6;
+`
+
+const Fallback = styled.p`
+    color: #5C33F6;
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: .2em;
+`
+
+const YouTube = styled.a`
+    border-bottom: 1px dashed black;
+    color: black;
+    &:visited {
+        color: black;
+    }
+    padding: 0 .2em .2em;
+    display: block;
 `
 
 const Welcome = () => {
@@ -39,6 +56,8 @@ const Welcome = () => {
             <WelcomeCard>
                 <Logo>Jazzify</Logo>
                 <Subtitle>The Spotify-powered jazz discovery app</Subtitle>
+                <Fallback>No Spotify Premium?</Fallback>
+                <YouTube href="https://www.youtube.com/watch?v=wkLdCrWnmng" target="_blank">Watch the video</YouTube>
                 <SpotifyLink loggedIn={false} />
             </WelcomeCard>
         </WelcomeContainer>

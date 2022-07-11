@@ -85,7 +85,7 @@ export const toggleLiked = createAsyncThunk(
   async ({id, isLiked}: {id: string, isLiked: boolean}, { getState }) => {
     // @ts-ignore
     const { user, player } = getState();
-    const liked = await playerAPI.toggleLiked({ accessToken: user.token.access_token, id, isLiked });
+    await playerAPI.toggleLiked({ accessToken: user.token.access_token, id, isLiked });
     return isLiked
       ? player.liked.filter((likedId: string) => likedId !== id)
       : [id, ...player.liked]
@@ -122,6 +122,9 @@ export const playerSlice = createSlice({
       .addCase(playTracks.rejected, (state) => {
         state.status = "failed"
       })
+      .addCase(toggleLiked.pending, (state) => {
+        state.status = "posting"
+      })
       .addCase(toggleLiked.fulfilled, (state, action) => {
         state.liked = action.payload;
       })
@@ -134,7 +137,6 @@ export const playerSlice = createSlice({
 export const selectPlayer = (state: any) => state.player;
 export const selectLiked = (id: string) => (state: any) => 
   state.player.liked.find((likedId: string) => likedId === id);
-export const selectCurrentTrack = (state: any) => state.player.currentTrack;
 export const selectArtists = (id: string) => (state: any) =>
   state.player.tracks.find((track: TrackFromDB) => track.uri === id)?.artists || [];
 
