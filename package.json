@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A MERN stack jazz discovery app using TypeScript, the Spotify API and web SDK, React Router Dom, Redux Toolkit, MongoDB and Mongoose.",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "cd server && node ./bin/www",
     "build": "cd client && npm run build"
