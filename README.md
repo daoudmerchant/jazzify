@@ -15,6 +15,7 @@ A MERN stack jazz discovery app using TypeScript, the Spotify API and web SDK, R
 
 ### Future features:
 
+- [ ] Error handling
 - [ ] Desktop view
 - [ ] Further instruments (clarinet, percussion, harmonica etc.) when database is robust enough
 - [ ] Search by (discovered) artist (possible restructuring of database relations)
