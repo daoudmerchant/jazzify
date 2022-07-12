@@ -36,6 +36,7 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     background-color: transparent;
     font-family: 'Source Sans Pro', sans-serif;
+    cursor: pointer;
   }
 
   a, a:visited {

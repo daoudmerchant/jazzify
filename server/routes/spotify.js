@@ -3,11 +3,11 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 
 const scopes = [
-  // "user-read-email",
+  "user-read-email",
   // "playlist-read-private",
   // "playlist-read-collaborative",
   "streaming",
-  // "user-read-private",
+  "user-read-private",
   "user-library-read",
   "user-library-modify",
   // "user-top-read",
