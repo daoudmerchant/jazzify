@@ -27,7 +27,7 @@ router.get('/login', (_, res) => {
       response_type: 'code',
       client_id: process.env.CLIENT_ID,
       scope: scopes.join(' '),
-      redirect_uri: 'http://localhost:3000/',
+      redirect_uri: 'https://findmejazz.herokuapp.com/',
       state,
     }));
 });
@@ -39,7 +39,7 @@ router.get('/callback', async (req, res) => {
   const formBody = new URLSearchParams();
   formBody.append('grant_type', 'authorization_code')
   formBody.append('code', req.query.code)
-  formBody.append('redirect_uri', 'http://localhost:3000/')
+  formBody.append('redirect_uri', 'https://findmejazz.herokuapp.com/')
   try {
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',

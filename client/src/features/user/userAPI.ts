@@ -2,14 +2,14 @@ import { TokenQuery } from "./userSlice";
 
 const getNewToken = async ({ code, state }: TokenQuery) => {
     const response = await fetch(
-        `http://localhost:3001/spotify/callback?${new URLSearchParams({code, state})}`
+        `/spotify/callback?${new URLSearchParams({code, state})}`
     );
     const token = await response.json();
     return token;
 }
 
 const refreshToken = async (refreshToken: string) => {
-    const refreshResponse = await fetch(`http://localhost:3001/spotify/refresh?refreshToken=${refreshToken}`);
+    const refreshResponse = await fetch(`/spotify/refresh?refreshToken=${refreshToken}`);
     const token = await refreshResponse.json();
     return token.access_token;
 }

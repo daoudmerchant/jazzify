@@ -30,7 +30,7 @@ const toggleLiked = async ({accessToken, id, isLiked}: LikeQuery) => {
 const playTracks = async ({deviceId, accessToken, instruments}: TrackQuery) => {
   let instrumentQuery = new URLSearchParams();
   instruments.forEach(instr => instrumentQuery.append('instruments', instr));
-  const response = await fetch(`http://localhost:3001/api/tracks?${instrumentQuery.toString()}`);
+  const response = await fetch(`/api/tracks?${instrumentQuery.toString()}`);
   const tracks = await response.json();
   const shuffledTracks = tracks.sort(() => Math.random() - 0.5); // TODO: improve
   const uris = shuffledTracks.map(({uri}: {uri: string}) => `spotify:track:${uri}`);
