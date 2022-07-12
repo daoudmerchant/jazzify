@@ -26,12 +26,11 @@ const MainContainer = styled.div`
 
 const Main = ({ accessToken }: Props) => {
     const dispatch = useAppDispatch();
-    const { currentTrack, player, paused } = useAppSelector(selectPlayer);
+    const { currentTrack, player } = useAppSelector(selectPlayer);
     useEffect(() => {
         if (!accessToken || player) {
             return;
         }
-        // Have to initialise and store here because Redux reducers can't have side effects :(
         const script = document.createElement("script");
         script.src = "https://sdk.scdn.co/spotify-player.js";
         script.async = true;
@@ -73,8 +72,6 @@ const Main = ({ accessToken }: Props) => {
     return (
         <MainContainer>
             <Selection />
-            {/*
-            // @ts-ignore */}
             <Player track={currentTrack} />
         </MainContainer>
     )

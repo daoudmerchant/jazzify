@@ -38,11 +38,11 @@ const Subtitle = styled.p`
     top: calc(50% + 450px + 1em);
     left: 50%;
     transform: translateX(-50%) ;
+    margin: 0;
     width: 100%;
     text-align: center;
     color: #5C33F6;
     font-size: 1em;
-    margin: 0;
     font-style: italic;
 `
 

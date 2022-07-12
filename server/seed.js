@@ -182,10 +182,27 @@ const seedArtists = [
     {
       name: "Aaron Parks",
       instrument: "piano"
+    },
+    {
+      name: "Louis Armstrong",
+      instrument: "trumpet"
+    },
+    {
+      name: "Herb Ellis",
+      instrument: "guitar"
+    },
+    {
+      name: "Louis Bellson",
+      instrument: "drums"
     }
 
 ]
 const seedTracks = [
+  {
+    uri: "6PmKatJs99z0fDXi9624pk", // That Old Feeling, Louis Armstrong and Oscar Peterson
+    instruments: ["vocals", "piano", "guitar", "bass", "drums"],
+    artists: ["Louis Armstrong", "Oscar Peterson", "Herb Ellis", "Ray Brown", "Louis Bellson"]
+  },
   {
     uri: "66lPgenfvsvf3UBgTEhIML", // Flor de Lis, Gretchen Parlato
     instruments: ["vocals", "piano", "guitar", "bass"],
