@@ -74,7 +74,6 @@ export const playTracks = createAsyncThunk(
     // @ts-ignore
     const { user, player } = getState();
     const tracks = await playerAPI.playTracks({ deviceId: player.device_id, accessToken: user.token.access_token, instruments });
-    console.log(tracks)
     return tracks;
   },
   cancelOnLoading('player')

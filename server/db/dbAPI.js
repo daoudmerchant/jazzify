@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 // const ObjectId = mongoose.Types.ObjectId;
 const Track = require("../models/track");
-// const Artist = require("../models/artist")
+const Artist = require("../models/artist")
 
 const query = cb => async params => {
     await mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true , useUnifiedTopology: true});

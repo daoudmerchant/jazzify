@@ -100,7 +100,7 @@ const Nav = () => {
                 <Logo to="/">Jazzify</Logo>
                 <About to="about">?</About>
                 { !user
-                    ? <SignIn href="http://localhost:3001/spotify/login" />
+                    ? <SignIn href="/spotify/login" />
                     : <MyLink to="settings">
                         <UserInitial>{user.username.charAt(0).toUpperCase()}</UserInitial>
                     </MyLink>
