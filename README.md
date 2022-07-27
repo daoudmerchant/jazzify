@@ -1,6 +1,6 @@
 # Jazzify
 
-## [Live Demo](https://findmejazz.herokuapp.com/)
+## [Live Demo](https://findmejazz.herokuapp.com/) • [Video](https://www.youtube.com/watch?v=wkLdCrWnmng)
 
 A MERN stack jazz discovery app using TypeScript, the Spotify API and web SDK, React Router Dom, Redux Toolkit, MongoDB and Mongoose.
 
